@@ -8,11 +8,20 @@
 
 .card .title {
   padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   font-weight: 600;
   color: rgba(0, 0, 0, 0.35); }
 
 .card .content {
-  padding: 30px; }
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 0; }
+
+.card .content .number {
+  font-size: 2.3rem;
+  text-align: right;
+  font-weight: 200; }
 
 .card .share-overlay {
   position: absolute;
@@ -45,3 +54,6 @@
 
 .card .functions ul li:hover {
   color: #2f7ee9; }
+
+.card .content .chart {
+  width: 100%; }
