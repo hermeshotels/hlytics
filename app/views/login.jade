@@ -1,0 +1,42 @@
+extends layout
+
+block viewcss
+	link(rel='stylesheet', href='/css/login.css')
+
+block content
+	div(class="login-wrapper")
+		div(class="valign-wrapper")
+			div(class="valign")
+				div(class="login-box")
+					div(class="loading")
+						div(class="valign-wrapper")
+							div(class="valign")
+								div(class="loader-svg")
+									svg(class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg")
+										circle(class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30")
+					img(src="img/analytics.svg")
+					h1 HermesLytics <br>
+						small super-easy hotel data.
+					
+					div(class="row")
+						div(class="small-12 large-12 columns")
+							div(class="login-error")
+								span Credenziali non valide, riprova.
+					
+					
+					form(id="login-form")
+						div(class="row")
+							div(class="small-12 large-12 columns")
+								input(placeholder="Email" type="email" id="email" name="email" data-parsley-trigger="change" required="")
+							div(class="small-12 large-12 columns")
+								input(placeholder="Password" type="password" id="password" name="password")
+							div(class="small-12 large-12 columns")
+								button(type="submit" class="expanded button") Accedi
+								
+					div(class="row recovery")
+						div(class="small-12 large-7 columns")
+							a(href="#") Password dimenticata ?
+						div(class="small-12 large-5 columns")
+							a(href="/register") Nuovo utente ? 
+block viewjs
+	script(src='/components/login.js')

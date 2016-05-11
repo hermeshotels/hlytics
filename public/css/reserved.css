@@ -1,0 +1,113 @@
+.reserved-wrapper {
+  background-color: #f2f5f8;
+  background-image: url("../img/dash_bh.png");
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  background-size: 40%;
+  height: 100%;
+  overflow-y: auto; }
+
+.header {
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 1px solid #4849e3;
+  background-color: #4E4FF7; }
+  .header .logo {
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #FFF; }
+  .header ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 60px; }
+    .header ul li {
+      float: left;
+      padding-left: 10px;
+      padding-right: 10px; }
+      .header ul li a {
+        font-weight: 300;
+        color: #FFF;
+        opacity: 0.8;
+        transition: all 0.5s ease-in-out; }
+        .header ul li a:hover {
+          opacity: 1; }
+
+.sub-header {
+  height: 60px;
+  background-color: #FFF;
+  box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.08); }
+  .sub-header ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 60px;
+    height: 100%; }
+    .sub-header ul li {
+      font-weight: 300;
+      height: 100%;
+      float: left; }
+      .sub-header ul li a {
+        display: inline-block;
+        padding-left: 10px;
+        padding-right: 10px;
+        height: 100%;
+        transition: all 0.5s ease-in-out; }
+        .sub-header ul li a:hover {
+          background-color: #eff2f4; }
+      .sub-header ul li i {
+        vertical-align: middle;
+        margin-right: 6px; }
+      .sub-header ul li .pick-hotel {
+        line-height: 60px; }
+        .sub-header ul li .pick-hotel i {
+          font-size: 1.6em;
+          color: rgba(0, 0, 0, 0.5);
+          margin-right: 10px; }
+        .sub-header ul li .pick-hotel input[type="text"] {
+          border: 0;
+          padding: 0;
+          width: auto;
+          display: inline-block;
+          margin: 0;
+          height: 100%;
+          background-color: #FFF; }
+          .sub-header ul li .pick-hotel input[type="text"]:focus {
+            outline: 0;
+            box-shadow: none;
+            padding: 0.5rem;
+            background-color: #FFF;
+            padding: 0;
+            margin: 0; }
+    .sub-header ul li.active {
+      background-color: #f2f5f8; }
+
+.sub-view {
+  padding-top: 30px; }
+
+.autocomplete-suggestions {
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.2);
+  border: 1px solid #fefefe;
+  borde-radius: 3px;
+  background: #FFF;
+  overflow: auto;
+  cursor: pointer; }
+
+.autocomplete-suggestion {
+  padding: 2px 5px;
+  white-space: nowrap;
+  overflow: hidden; }
+
+.autocomplete-selected {
+  background: #F0F0F0; }
+
+.autocomplete-suggestions strong {
+  font-weight: normal;
+  color: #3399FF; }
+
+.autocomplete-group {
+  padding: 2px 5px; }
+
+.autocomplete-group strong {
+  display: block;
+  border-bottom: 1px solid #000; }

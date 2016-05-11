@@ -1,0 +1,43 @@
+extends layout
+
+block viewcss
+	link(rel='stylesheet', href='/css/login.css')
+
+block content
+	div(class="login-wrapper")
+		div(class="valign-wrapper")
+			div(class="valign")
+				div(class="login-box")
+					div(class="loading")
+						div(class="valign-wrapper")
+							div(class="valign")
+								div(class="loader-svg")
+									svg(class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg")
+										circle(class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30")
+					img(src="img/user.svg")
+					h1 Benvenuto! <br>
+						small inserisci i dati per continuare.
+					
+					div(class="login-error")
+						span Errore nel processo di registrazione. Riprova.
+					
+					form(id="login-form")
+						div(class="row")
+							div(class="small-12 large-12 columns")
+								input(placeholder="Nome" type="text" id="name" name="name" data-parsley-trigger="change" required="")
+							div(class="small-12 large-12 columns")
+								input(placeholder="Email" type="email" id="email" name="email" data-parsley-trigger="change" required="")
+							div(class="small-12 large-12 columns")
+								input(placeholder="Password" type="password" id="password" name="password" data-parsley-trigger="change" required="" data-parsley-minlength="3")
+							div(class="small-12 large-12 columns")
+								input(placeholder="Conferma password" type="password" id="password_confirm" name="password_confirm" data-parsley-trigger="change" required="" data-parsley-minlength="3" data-parsley-equalto="#password")
+							div(class="small-12 large-12 columns")
+								button(type="submit" class="expanded button") Registrati
+								
+					div(class="row recovery")
+						div(class="small-12 large-7 columns")
+							a(href="#") Password dimenticata ?
+						div(class="small-12 large-5 columns")
+							a(href="/login") Torna la login 
+block viewjs
+	script(src='/components/register.js')

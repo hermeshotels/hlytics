@@ -1,0 +1,24 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width,initial-scale=1.0')
+
+    title= title
+    block css
+      link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css')
+      link(rel='stylesheet', href='/vendor/font.css')
+      link(rel='stylesheet', href='/css/style.css')
+    block viewcss
+    block js
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js')
+      script(src='http://parsleyjs.org/dist/parsley.min.js')
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js')
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js')
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js')
+      sript(src='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.js')
+      if ENV_DEVELOPMENT
+        script(src='http://localhost:35729/livereload.js')
+    block viewjs
+  body
+    block content

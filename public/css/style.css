@@ -1,0 +1,59 @@
+@import url(https://fonts.googleapis.com/css?family=Kanit:400,100,300,200,500,600,700,800,900);
+* {
+  font-family: 'Kanit', sans-serif; }
+
+html, body {
+  height: 100%;
+  width: 100%; }
+
+.clear-fix {
+  clear: both; }
+
+input [type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea {
+  font-weight: 300;
+  box-shadow: none; }
+
+.button {
+  background-color: #0046b0;
+  border-radius: 3px; }
+
+.valign-wrapper {
+  display: table;
+  width: 100%;
+  height: 100%; }
+
+.valign {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center; }
+
+input.parsley-success,
+select.parsley-success,
+textarea.parsley-success {
+  color: #468847;
+  background-color: #DFF0D8;
+  border: 1px solid #D6E9C6; }
+
+input.parsley-error,
+select.parsley-error,
+textarea.parsley-error {
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border: 1px solid #EED3D7; }
+
+.parsley-errors-list {
+  margin-bottom: 15px;
+  color: #B94A48;
+  font-weight: 300;
+  padding: 0;
+  list-style-type: none;
+  font-size: 0.9em;
+  line-height: 0.9em;
+  opacity: 0;
+  transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in; }
+
+.parsley-errors-list.filled {
+  opacity: 1; }
