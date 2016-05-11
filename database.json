@@ -1,0 +1,16 @@
+{
+  "dev": {
+    "driver": "mysql",
+    "host": "locahost",
+    "username": "root",
+    "password": "hermes2015",
+    "database": "hermeslytics"
+  },
+  "prod": {
+    "driver": "mysql",
+    "host": "127.0.0.1",
+    "username": "root",
+    "password": "marlboro",
+    "database": "hermeslytics"
+  }
+}
