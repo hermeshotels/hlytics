@@ -11,7 +11,7 @@ var databases = {
             connectionLimit: 50,
             host: "localhost",
             user: "root",
-            password: "hermes2015",
+            password: "marlboro",
             database: "hermeslytics"
         }
     },
