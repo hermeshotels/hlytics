@@ -13,6 +13,14 @@ html,body{
 	clear: both;
 }
 
+.text-success{
+  color: #27ae60;
+}
+
+.text-danger{
+  color: #c0392b;
+}
+
 input [type=color], [type=date], [type=datetime-local], [type=datetime], [type=email], [type=month], [type=number], [type=password], [type=search], [type=tel], [type=text], [type=time], [type=url], [type=week], textarea{
 	font-weight: 300;
 	box-shadow: none;
