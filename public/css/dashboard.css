@@ -37,6 +37,7 @@
 
 .card .content .sub {
   font-weight: 300;
+  text-align: right;
   color: rgba(0, 0, 0, 0.35); }
 
 .card .share-overlay {
