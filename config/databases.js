@@ -2,14 +2,14 @@ var databases = {
     lytics: {
         development:{
             connectionLimit: 50,
-            host: "localhost",
+            host: "127.0.0.1",
             user: "root",
-            password: "302108",
+            password: "hermes2015",
             database: "hermeslytics"
         },
         production: {
             connectionLimit: 50,
-            host: "localhost",
+            host: "127.0.0.1",
             user: "root",
             password: "marlboro",
             database: "hermeslytics"
