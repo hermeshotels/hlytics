@@ -55,7 +55,8 @@ module.exports = function(){
     
     User.findById = function findById(id, callback){
          pools.lyticsPool.getConnection(function openDbConnection(err, client){
-            client.query('select * from ' + TABLENAME + ' where id = ?', [id], function executeQuery(err, user){
+             console.log(id);
+            client.query('SELECT * FROM ' + TABLENAME + ' WHERE id=?', [id], function executeQuery(err, user){
                 client.release();
                 if(err) return callback(err);
                 return callback(null, user[0]);
