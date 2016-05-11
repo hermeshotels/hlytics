@@ -31,7 +31,7 @@ jQuery(document).ready(function(){
                 errorboxTl.play();
             }
             
-            window.location.replace("/login");
+            //window.location.replace("/login");
         });
         
         return false;

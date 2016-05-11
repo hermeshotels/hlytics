@@ -35,16 +35,18 @@ module.exports = function(){
                 //Genero la query per la creazione del record
                 var builder = utils.buildInsertQuery(user, TABLENAME);
                 //Eseguo la query con i parametri generati
-                client.query(builder.query, builder.values, function executeQuery(err, user){
+                client.query(builder.query, builder.values, function executeQuery(err, result){
                     if(err) return callback(err);
                     client.release();
+                    delete user.password;
                     return callback(null, user);
                 });
             }else{
                 var builder = utils.buildUpdateQuery(user, TABLENAME, 'id');
-                client.query(builder.query, builder.values, function executeQuery(err, user){
+                client.query(builder.query, builder.values, function executeQuery(err, result){
                     if(err) return callback(err);
                     client.release();
+                    delete user.password;
                     return callback(null, user);
                 });
             }
