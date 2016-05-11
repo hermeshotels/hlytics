@@ -9,16 +9,15 @@ jQuery(document).ready(function(){
             
             console.log(res.body);
             
+            //set dashboard panels
+            jQuery('#total-production').text(res.body.details.reservationTotal);
+            
             var channelTotals = [];
             var channelAdr = [];
             jQuery.each(res.body.details.channelList, function(key, value){
                 channelTotals.push(res.body.details.channels[value].total);
                 channelAdr.push(res.body.details.channels[value].adr);
             });
-            
-            console.log(channelTotals);
-            console.log(channelAdr);
-            
             
             jQuery('#channel-adr-chart').highcharts({
                 chart: {

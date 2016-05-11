@@ -32,5 +32,6 @@ jQuery(document).ready(function () {
                 alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
             }
         });
+        
     });
 });
