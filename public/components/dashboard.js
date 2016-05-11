@@ -10,7 +10,7 @@ jQuery(document).ready(function(){
             console.log(res.body);
             
             //set dashboard panels
-            jQuery('#total-production').text(res.body.details.reservationTotal);
+            jQuery('#total-production').text(numeral(res.body.details.reservationTotal).format('$0,0.00'));
             
             var channelTotals = [];
             var channelAdr = [];

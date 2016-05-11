@@ -1,4 +1,27 @@
 jQuery(document).ready(function () {
+    
+    //Set up the numeral library to format numbers
+    numeral.language('it', {
+        delimiters: {
+            thousands: '.',
+            decimal: ','
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
+        },
+        ordinal : function (number) {
+            return number === 1 ? 'er' : 'esimo';
+        },
+        currency: {
+            symbol: '€'
+        }
+    });
+
+    // switch between languages
+    numeral.language('it');
 
     jQuery('.tooltipstered').tooltipster({
         theme: 'tooltipster-noir'
