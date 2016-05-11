@@ -3,7 +3,7 @@ jQuery(document).ready(function(){
     var start = moment().subtract(30, 'days').format('YYYYMMDD0000');
     var end = moment().format('YYYYMMDD2359');
     
-    superagent.get('/api/hotels/1684/production/from/' + start + '/to/' + end)
+    superagent.get('/api/hotels/1684/production/channel/from/' + start + '/to/' + end)
         .end(function(err, res){
             if(err) console.debug(err);
             
@@ -11,6 +11,7 @@ jQuery(document).ready(function(){
             
             //set dashboard panels
             jQuery('#total-production').text(numeral(res.body.details.reservationTotal).format('$0,0.00'));
+            jQuery('#total-adr').text(numeral(res.body.details.periodAdr).format('$0,0.00'));
             
             var channelTotals = [];
             var channelAdr = [];

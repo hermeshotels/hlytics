@@ -26,7 +26,7 @@ module.exports = function(){
     il report per tutti i canali disponibili per l'hotel selezionato.
     Nel caso in cui il filtro canali è presente la richiesta restituisce solo i dati relativi ai canali selzionati.
     */
-    Hotel.getProductionPeriod = function(id, channels, dateFrom, dateTo, callback){
+    Hotel.getChannelProductionPeriod = function(id, channels, dateFrom, dateTo, callback){
         pools.hermesPool.getConnection(function openDbConnection(err, client){
             if(err) return callback(err);
             
