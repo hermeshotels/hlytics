@@ -35,16 +35,19 @@ jQuery(document).ready(function(){
                     percentualDifference();
                     console.log(scope);
                     
-                    jQuery('#total-variation').text(numeral(scope.totalDifference / 100).format('0.000%') + ' mese precendete.');
                     if(scope.totalDifference > 0){
+                        jQuery('#total-variation').html('<i class="streamline-trending-up"></i> ' + numeral(scope.totalDifference / 100).format('0.00%') + ' mese precendete.');
                         jQuery('#total-variation').addClass('text-success');
                     }else{
+                        jQuery('#total-variation').html('<i class="streamline-trending-down"></i> ' + numeral(scope.totalDifference / 100).format('0.00%') + ' mese precendete.');
                         jQuery('#total-variation').addClass('text-danger');
                     }
-                    jQuery('#adr-variation').text(numeral(scope.adrDifference / 100).format('0.000%') + ' mese precedente.');
+                    
                     if(scope.adrDifference > 0){
+                        jQuery('#adr-variation').html('<i class="streamline-trending-up"></i> ' + numeral(scope.adrDifference / 100).format('0.00%') + ' mese precedente.');
                         jQuery('#adr-variation').addClass('text-success');
                     }else{
+                        jQuery('#adr-variation').html('<i class="streamline-trending-down"></i> ' + numeral(scope.adrDifference / 100).format('0.00%') + ' mese precedente.');
                         jQuery('#adr-variation').addClass('text-danger');
                     }
                 });
