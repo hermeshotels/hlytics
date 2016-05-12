@@ -1,57 +1,41 @@
 jQuery(document).ready(function(){
     
-    var startPeriod1 = moment().subtract(30, 'days').format('YYYYMMDD0000');
-    var endPeriod1 = moment().format('YYYYMMDD2359');
+    var startCurrent = moment().startOf('year').format('YYYYMMDD0000');
+    var endCurrent = moment().endOf('year').format('YYYYMMDD0000');
     
-    var startPeriod2 = moment().subtract(60, 'days').format('YYYYMMDD0000');
-    var endPeriod2 = moment().subtract(30, 'days').format('YYYYMMDD2359');
+    var startPrevious = moment().startOf('year').subtract(1, 'years').format('YYYYMMDD0000');
+    var endPrevious = moment().endOf('year').subtract(1, 'years').format('YYYYMMDD0000');
     
-    console.log(moment().endOf('year').format('YYYYMMDD0000'));
+   
+    
+    var start = moment().startOf('year').format('YYYYMMDD0000');
+    var end = moment().startOf('year').format('YYYYMMDD0000');
     
     var scope = {
         currentData: null,
         previousData: null,
-    }
+        currentMonth: moment().format('M'),
+        productionView: 'year',
+        adrView: 'year'
+    };
     
     /*
     Richiedo i dati da oggi meno 30 giorni per mostrarli al cliente.
     */
-    superagent.get('/api/hotels/1684/production/channel/from/' + startPeriod1 + '/to/' + endPeriod1)
+    superagent.get('/api/hotels/1684/production/channel/from/' + startCurrent + '/to/' + endCurrent)
         .end(function(err, res){
             if(err) console.debug(err);
             
             scope.currentData = res.body;
-            
-            //set dashboard panels
-            jQuery('#total-production').text(numeral(res.body.details.reservationTotal).format('$0,0.00'));
-            jQuery('#total-adr').text(numeral(res.body.details.periodAdr).format('$0,0.00'));
-            
             //setup the graph
             channelAdrGraph();
             
-            superagent.get('/api/hotels/1684/production/channel/from/' + startPeriod2 + '/to/' + endPeriod2)
+            superagent.get('/api/hotels/1684/production/channel/from/' + startPrevious + '/to/' + endPrevious)
                 .end(function(err, res){
                     if(err) console.debug(err);
                     scope.previousData = res.body;
-                    //Ricavo i valori di variazione percentuale del totale prenotazioni e ADR
+                    
                     percentualDifference();
-                    console.log(scope);
-                    
-                    if(scope.totalDifference > 0){
-                        jQuery('#total-variation').html('<i class="streamline-trending-up"></i> ' + numeral(scope.totalDifference / 100).format('0.00%') + ' mese precendete.');
-                        jQuery('#total-variation').addClass('text-success');
-                    }else{
-                        jQuery('#total-variation').html('<i class="streamline-trending-down"></i> ' + numeral(scope.totalDifference / 100).format('0.00%') + ' mese precendete.');
-                        jQuery('#total-variation').addClass('text-danger');
-                    }
-                    
-                    if(scope.adrDifference > 0){
-                        jQuery('#adr-variation').html('<i class="streamline-trending-up"></i> ' + numeral(scope.adrDifference / 100).format('0.00%') + ' mese precedente.');
-                        jQuery('#adr-variation').addClass('text-success');
-                    }else{
-                        jQuery('#adr-variation').html('<i class="streamline-trending-down"></i> ' + numeral(scope.adrDifference / 100).format('0.00%') + ' mese precedente.');
-                        jQuery('#adr-variation').addClass('text-danger');
-                    }
                 });
     
         });
@@ -140,17 +124,63 @@ jQuery(document).ready(function(){
             channelAdr: []
         }
         
-        jQuery.each(scope.currentData.details.channelList, function(key, value){
-            adrFormat.channelTotals.push(scope.currentData.details.channels[value].total);
-            adrFormat.channelAdr.push(scope.currentData.details.channels[value].adr);      
-        });
+        jQuery.each(scope.currentData.channelsGroup, function(key, value){
+            console.log(key);
+            console.log(value);
+        })
+        
         
         return adrFormat;
     }
     
+    jQuery('.change-view').on('click', function(event){
+        event.preventDefault();
+        scope.productionView = jQuery(this).data('type');
+        percentualDifference();
+    })
+    
     function percentualDifference(){
-        scope.totalDifference = ((scope.currentData.details.reservationTotal - scope.previousData.details.reservationTotal) / scope.previousData.details.reservationTotal) * 100;
-        scope.adrDifference = ((scope.currentData.details.periodAdr - scope.previousData.details.periodAdr) / scope.previousData.details.periodAdr) * 100;
+        
+        var productionTotal = 0;
+        var adrTotal = 0;
+        var productionDifference = 0;
+        var adrDifference = 0;
+        
+        if(scope.productionView == 'year'){
+            //Imposto il valore della produzione
+            //Calcolo la differenza percentuale con il periodo precedente
+            productionTotal = scope.currentData.details.productionTotal;
+            adrTotal = scope.currentData.details.totalAdr;
+            productionDifference = ((scope.currentData.details.productionTotal - scope.previousData.details.productionTotal) / scope.previousData.details.productionTotal) * 100;
+            adrDifference = ((scope.currentData.details.totalAdr - scope.previousData.details.totalAdr) / scope.previousData.details.totalAdr ) * 100;    
+        }else{
+            productionTotal = scope.currentData.details.monthsProduction[scope.currentMonth].total;
+            adrTotal = scope.currentData.details.monthsProduction[scope.currentMonth].adr;
+            productionDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].total - scope.previousData.details.monthsProduction[scope.currentMonth].total) / scope.previousData.details.monthsProduction[scope.currentMonth].total) * 100;
+            adrDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].adr - scope.previousData.details.monthsProduction[scope.currentMonth].adr) / scope.previousData.details.monthsProduction[scope.currentMonth].adr ) * 100;
+        }
+        
+        
+        
+        jQuery('#total-production').text(numeral(productionTotal).format('$0,0.00'));
+        jQuery('#total-adr').text(numeral(adrTotal).format('$0,0.00'));
+        
+        if(productionDifference > 0){
+            jQuery('#total-variation').html('<i class="streamline-trending-up"></i> ' + numeral(productionDifference / 100).format('0.00%') + ' anno precendete.');
+            jQuery('#total-variation').addClass('text-success');
+        }else{
+            jQuery('#total-variation').html('<i class="streamline-trending-down"></i> ' + numeral(productionDifference / 100).format('0.00%') + ' anno precendete.');
+            jQuery('#total-variation').addClass('text-danger');
+        }
+        
+        if(adrDifference > 0){
+            jQuery('#adr-variation').html('<i class="streamline-trending-up"></i> ' + numeral(adrDifference / 100).format('0.00%') + ' anno precedente.');
+            jQuery('#adr-variation').addClass('text-success');
+        }else{
+            jQuery('#adr-variation').html('<i class="streamline-trending-down"></i> ' + numeral(adrDifference / 100).format('0.00%') + ' anno precedente.');
+            jQuery('#adr-variation').addClass('text-danger');
+        }
+        
     }
     
 });

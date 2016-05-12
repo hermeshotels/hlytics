@@ -46,7 +46,9 @@ module.exports = function(){
                 "c.CA_NOME," +
                 "SUM(s.SC_TOTALE) as TOTALE," +
                 "p.PR_NOTTI AS NOTTI, " +
-                "MONTH(STR_TO_DATE(p.PR_DATA_AGG, '%Y%m%d')) as MONTH " +
+                "MONTH(STR_TO_DATE(p.PR_DATA_AGG, '%Y%m%d')) as MONTH, " +
+                "YEAR(STR_TO_DATE(p.PR_DATA_AGG, '%Y%m%d')) as YEAR, " +
+                "DAY(STR_TO_DATE(p.PR_DATA_AGG, '%Y%m%d')) as DAY " +
             "FROM " +
                 "prenotazioni as p " +
                 "LEFT JOIN scorporo as s ON p.PR_ID = s.PR_ID " +
@@ -74,45 +76,57 @@ module.exports = function(){
                var data = {
                    details: {
                        reservationCount: reservations.length,
-                       reservationTotal: 0,
-                       reservationNights: 0,
-                       periodAdr: 0,
-                       channels: {},
-                       channelList: []
-                   },
-                   reservations: reservations
+                       productionTotal: 0,
+                       nightsTotal: 0,
+                       totalAdr: 0,
+                       channelsGroup: {},
+                       monthsProduction: {}
+                   }
                };
                
-               for(var i = 0; i < reservations.length; i ++){
-                   
-                   if(data.details.channelList.indexOf(reservations[i].CA_NOME) < 0){
-                       data.details.channelList.push(reservations[i].CA_NOME);
-                   }
-                   
-                   data.details.reservationTotal += reservations[i].TOTALE;
-                   data.details.reservationNights += reservations[i].NOTTI;
-                   
-                   if(data.details.channels[reservations[i].CA_NOME]){
-                       data.details.channels[reservations[i].CA_NOME].total += reservations[i].TOTALE;
-                       data.details.channels[reservations[i].CA_NOME].nights += reservations[i].NOTTI;
+               data.details.productionTotal = _.sumBy(reservations, function(reservation){
+                   return reservation.TOTALE;
+               });
+               //Calcolo il totale dele notti
+               data.details.nightsTotal = _.sumBy(reservations, function(reservation){
+                   return reservation.NOTTI;
+               });
+               //Calcolo l'ADR totale di tutto il periodo ( Produzione su Notti )
+               data.details.totalAdr = data.details.productionTotal / data.details.nightsTotal;
+               //Recupero la lista di canali disponibili               
+               _.forEach(reservations, function(reservation){
+                   //Divisione fatturato per canale
+                   if(data.details.channelsGroup[reservation.CA_NOME]){
+                       data.details.channelsGroup[reservation.CA_NOME].total += reservation.TOTALE;
+                       data.details.channelsGroup[reservation.CA_NOME].nights += reservation.NOTTI;
                    }else{
-                       data.details.channels[reservations[i].CA_NOME] = {
-                           total: reservations[i].TOTALE,
-                           nights: 0,
-                           adr: 0
+                       data.details.channelsGroup[reservation.CA_NOME] = {
+                           total: reservation.TOTALE,
+                           nights: reservation.NOTTI
                        }
                    }
-               }
-               
-               for(var channel in data.details.channels){
-                   if(data.details.channels.hasOwnProperty(channel)){
-                       data.details.channels[channel].adr = data.details.channels[channel].total / data.details.channels[channel].nights;
+                   
+                   if(data.details.monthsProduction[reservation.MONTH]){
+                       data.details.monthsProduction[reservation.MONTH].total += reservation.TOTALE;
+                       data.details.monthsProduction[reservation.MONTH].nights += reservation.NOTTI;
+                   }else{
+                       data.details.monthsProduction[reservation.MONTH] = {
+                           total: reservation.TOTALE,
+                           nights: reservation.NOTTI
+                       }
                    }
-               }
+               });
                
-               data.details.periodAdr = data.details.reservationTotal / data.details.reservationNights; 
+               _.forEach(data.details.channelsGroup, function(channel){
+                   channel.adr = channel.total / channel.nights;
+               });
                
-               return callback(null, data); 
+               _.forEach(data.details.monthsProduction, function(month){
+                   month.adr = month.total / month.nights;
+               })
+               
+               return callback(null, data);
+               
             });
         })
     }
