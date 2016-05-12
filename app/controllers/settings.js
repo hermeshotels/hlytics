@@ -8,3 +8,8 @@ module.exports = function (app) {
 router.get('/profile', function (req, res, next) {
 	res.render('reserved/profile');
 });
+
+router.get('/notification', function (req, res, next) {
+	res.render('reserved/notification');
+});
+
