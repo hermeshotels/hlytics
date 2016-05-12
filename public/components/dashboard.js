@@ -6,6 +6,8 @@ jQuery(document).ready(function(){
     var startPeriod2 = moment().subtract(60, 'days').format('YYYYMMDD0000');
     var endPeriod2 = moment().subtract(30, 'days').format('YYYYMMDD2359');
     
+    console.log(moment().endOf('year').format('YYYYMMDD0000'));
+    
     var scope = {
         currentData: null,
         previousData: null,

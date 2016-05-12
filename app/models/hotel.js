@@ -45,7 +45,8 @@ module.exports = function(){
                 "p.PR_ID," +
                 "c.CA_NOME," +
                 "SUM(s.SC_TOTALE) as TOTALE," +
-                "p.PR_NOTTI AS NOTTI " +
+                "p.PR_NOTTI AS NOTTI, " +
+                "MONTH(STR_TO_DATE(p.PR_DATA_AGG, '%Y%m%d')) as MONTH " +
             "FROM " +
                 "prenotazioni as p " +
                 "LEFT JOIN scorporo as s ON p.PR_ID = s.PR_ID " +
