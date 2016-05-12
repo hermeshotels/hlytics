@@ -7,6 +7,10 @@ block viewcss
 	block subviewcss
 block content
 	div(class="reserved-wrapper")
+		div(class="reserved-loading")
+			div(class="valing-wrapper")
+				div(class="valign")
+					h4 solo un momento...
 		div(class="header")
 			div(class="row")
 				div(class="small-2 large-2 columns")
@@ -29,7 +33,7 @@ block content
 								input(type="text" placeholder="Seleziona un Hotel" id="hotelListBox")
 								
 						li(class=(current==='dashboard' ? 'active' : ''))
-							a(href="#")
+							a(href="/reserved/dashboard")
 								i(class="streamline-speed-gauge")
 								span Dashboard
 						li(class=(current==='reports' ? 'active' : ''))
