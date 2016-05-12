@@ -1,0 +1,25 @@
+extends reserved
+
+block subviewcss
+    link(rel='stylesheet', href='/css/profile.css')
+
+block subview
+    div(class="row")
+        div(class="small-3 large-3 columns")
+            div(class="side-menu")
+                div(class="side-header")
+                    i(class="streamline-location-user") 
+                    span  Impostazioni Personali
+                ul
+                    li(class=(current==='dashboard' ? 'active' : ''))
+                        a(href="") Profilo
+                    li(class=(current==='dashboard' ? 'active' : ''))
+                        a(href="") Notifiche
+                    li(class=(current==='dashboard' ? 'active' : ''))
+                        a(href="") Email
+                    
+        div(class="small-9 large-9 columns")
+            block settingpartial
+                            
+    block subviewjs
+        script(src='/components/profile.js')

@@ -1,7 +1,6 @@
 .side-menu {
   background-color: #FFF;
   width: 100%;
-  max-width: 290px;
   border-radius: 3px;
   padding: 0;
   box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.1); }
@@ -28,3 +27,5 @@
         transition: all 0.5s ease-in-out; }
         .side-menu ul li a:hover {
           background-color: #f0f0f0; }
+    .side-menu ul li.active {
+      border-left: 1px solid #007EE5; }
