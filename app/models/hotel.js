@@ -15,6 +15,7 @@ module.exports = function(){
     Hotel.getHotelShortList = function getHotelShortList(user, callback){
         //Recupero la lista di hotels abilitati
         pools.lyticsPool.getConnection(function openDbConnection(err, client){
+            client.release();
             if(err) return callback(err);
             client.query('select GROUP_CONCAT(h.hotel_id) AS allowed from users u INNER JOIN user_hotel h ON u.id = h.user_id WHERE u.id = ? GROUP BY u.id LIMIT 1', [user.id], function executeQuery(err, ids){
                 //Ho recuperato la lista di Ids abilitati alla visualizzazione per lo specifico utente.
@@ -25,7 +26,6 @@ module.exports = function(){
                     if(ids.length > 0){
                         //Lutente ha strutture collegate
                         client.query('SELECT HO_ID, HO_NOME, HO_INDIRIZZO FROM ' + TABLENAME + ' WHERE HO_ATTIVO = 1 AND HO_ID IN (?) ORDER BY HO_NOME', [ids[0].allowed.split(',')], function executeQuery(err, hotels){
-                        client.release();
                         if(err) return callback(err);
                         return callback(null, hotels);
                         });
