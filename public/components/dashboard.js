@@ -140,6 +140,7 @@ jQuery(document).ready(function(){
         var adrDifference = 0;
         
         if(scope.productionView == 'year'){
+            alertify.log("Stai visualizando i dati annuali.");
             //Imposto il valore della produzione
             //Calcolo la differenza percentuale con il periodo precedente
             productionTotal = scope.currentData.details.productionTotal;
@@ -147,6 +148,7 @@ jQuery(document).ready(function(){
             productionDifference = ((scope.currentData.details.productionTotal - scope.previousData.details.productionTotal) / scope.previousData.details.productionTotal) * 100;
             adrDifference = ((scope.currentData.details.totalAdr - scope.previousData.details.totalAdr) / scope.previousData.details.totalAdr ) * 100;    
         }else{
+            alertify.log("Stai visualizando i dati mensili.");
             productionTotal = scope.currentData.details.monthsProduction[scope.currentMonth].total;
             adrTotal = scope.currentData.details.monthsProduction[scope.currentMonth].adr;
             productionDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].total - scope.previousData.details.monthsProduction[scope.currentMonth].total) / scope.previousData.details.monthsProduction[scope.currentMonth].total) * 100;
