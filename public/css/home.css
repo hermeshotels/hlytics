@@ -1,0 +1,116 @@
+.hero {
+  background-image: url("http://orig06.deviantart.net/df84/f/2014/065/9/5/mountain_pass_by_rainth34-d79453m.jpg");
+  background-position: center;
+  background-size: calc(100% + 100px);
+  height: 550px; }
+
+.fixed-header {
+  height: 60px;
+  line-height: 60px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out; }
+
+.fixed-header.scrolled {
+  background-color: #FFF;
+  color: #1a1a1a;
+  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.8); }
+
+.fixed-header.scrolled .menu ul li a {
+  color: rgba(0, 0, 0, 0.7); }
+
+.fixed-header.scrolled .menu ul li a:hover {
+  color: black; }
+
+.fixed-header.scrolled .logo {
+  color: #1a1a1a; }
+
+.fixed-header .logo {
+  color: #FFF;
+  font-weight: 300;
+  font-size: 1.2rem; }
+
+.fixed-header .logo strong {
+  font-weight: 500; }
+
+.fixed-header .menu {
+  text-align: right; }
+
+.fixed-header .menu ul {
+  list-style: none;
+  line-height: 60px; }
+
+.fixed-header .menu ul li {
+  display: inline-block;
+  font-size: 1.1rem;
+  margin-right: 5px; }
+
+.fixed-header .menu ul li a {
+  color: rgba(255, 255, 255, 0.7);
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  font-weight: 200; }
+
+.fixed-header .menu ul li a:hover {
+  color: white; }
+
+.button.primaryh {
+  border-radius: 3px;
+  color: #1a1a1a;
+  font-weight: 100;
+  font-size: 1.1rem;
+  margin-top: 20px;
+  background-color: #FFF;
+  border: 0; }
+
+.button.primaryh:hover {
+  background-color: #1a1a1a;
+  color: #FFF; }
+
+.hero h1 {
+  color: #FFF;
+  line-height: 40px;
+  font-weight: 100; }
+
+.hero h1 small {
+  font-weight: 100;
+  font-size: 70%; }
+
+.black-overlay {
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.valign-wrapper {
+  display: table;
+  width: 100%;
+  height: 100%; }
+
+.valign-wrapper .valign {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  text-align: center; }
+
+.section {
+  padding-top: 80px;
+  padding-bottom: 80px; }
+
+.features {
+  text-align: center; }
+
+.features h2 {
+  font-weight: 100;
+  line-height: 32px; }
+
+.features h2 small {
+  font-size: 50%;
+  color: rgba(0, 0, 0, 0.7); }
+
+.section.blue {
+  background-color: #007EE5;
+  color: #FFF; }

@@ -1,4 +1,27 @@
 extends layout
-
+block viewcss
+  link(rel='stylesheet', href='/css/home.css')
 block content
-  h1 Home
+  div(class="fixed-header")
+    div(class="row")
+      div(class="small-3 large-3 columns")
+        div(class="logo")
+          | HERMES<strong>LYTICS</strong>
+      div(class="small-9 large-9 columns")
+        div(class="menu")
+          ul
+            li
+              a(href="") HOME
+            li
+              a(href="") FEATURES
+            li
+              a(href="") PRICING
+            li
+              a(href="/login") ACCEDI
+   
+   div(class="hero")
+    div(class="valign-wrapper black-overlay")
+      div(class="valign")
+        h1 We craft super-easy data analysis <br>
+          small driving your business to the edge
+        a(href="/register" class="button primaryh") INIZIA GRATIS
