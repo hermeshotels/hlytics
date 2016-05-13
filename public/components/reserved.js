@@ -1,5 +1,22 @@
 jQuery(document).ready(function () {
     
+    var loadingStatus = false;
+    
+    var loadingScreenTl = new TimelineMax();
+    loadingScreenTl.stop().to('.reserved-loading', 0.5, {opacity: 1})
+        .to('.reserved-loading', 0, {display: 'block'});
+    
+    document.addEventListener('loading', function(e){
+        if(loadingStatus == false){
+            loadingScreenTl.play();
+            loadingStatus = !loadingStatus;
+        }else{
+            loadingScreenTl.reverse();
+            loadingStatus = !loadingStatus;
+        }
+    }, false);
+
+    
     //Set up the numeral library to format numbers
     numeral.language('it', {
         delimiters: {

@@ -1,3 +1,6 @@
+var dashboardTl = new TimelineMax();
+dashboardTl.stop().to('.dashboard-wrapper', 0, {opacity: 1});
+
 var startCurrent = moment().startOf('year').format('YYYYMMDD0000');
 var endCurrent = moment().endOf('year').format('YYYYMMDD0000');
 
@@ -17,6 +20,8 @@ var scope = {
 };
 
 function populateDashboard(hotelId){
+    var loading = new Event('loading');
+    document.dispatchEvent(loading);
     scope.currentHotel = hotelId;
     //Recupero i dati necessari alla popolazione della dashboard
     superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + startCurrent + '/to/' + endCurrent)
@@ -33,6 +38,8 @@ function populateDashboard(hotelId){
                 scope.previousData = res.body;
                 
                 percentualDifference();
+                dashboardTl.play();
+                document.dispatchEvent(loading);
             });
 
     });   

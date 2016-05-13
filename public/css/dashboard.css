@@ -80,3 +80,6 @@
 
 .card .content .chart {
   width: 100%; }
+
+.dashboard-wrapper {
+  opacity: 0; }
