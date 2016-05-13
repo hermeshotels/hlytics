@@ -6,7 +6,7 @@ jQuery(document).ready(function(){
     var startPrevious = moment().startOf('year').subtract(1, 'years').format('YYYYMMDD0000');
     var endPrevious = moment().endOf('year').subtract(1, 'years').format('YYYYMMDD0000');
     
-   
+    alertify.log("Bentornato.");
     
     var start = moment().startOf('year').format('YYYYMMDD0000');
     var end = moment().startOf('year').format('YYYYMMDD0000');
@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
     /*
     Richiedo i dati da oggi meno 30 giorni per mostrarli al cliente.
     */
-    superagent.get('/api/hotels/1684/production/channel/from/' + startCurrent + '/to/' + endCurrent)
+    superagent.get('/api/hotels/1286/production/channel/from/' + startCurrent + '/to/' + endCurrent)
         .end(function(err, res){
             if(err) console.debug(err);
             
@@ -45,7 +45,16 @@ jQuery(document).ready(function(){
     function channelAdrGraph(){
         //La funzione è necessaria per formattare il valore degli ADR nel dato necessario
         //ad Hightcarts per la crezione del grafico
-        var adrData = adrLookup();
+        var channels = [];
+        var channelsTotal = [];
+        var channelsAdr = [];
+        
+        var channelLabels = $.map(scope.currentData.details.channelsGroup, function(v, i){
+           channels.push(i);
+           channelsTotal.push(v.total);
+           channelsAdr.push(v.adr);
+        });
+        
         jQuery('#channel-adr-chart').highcharts({
             chart: {
                 zoomType: 'xy'
@@ -54,7 +63,7 @@ jQuery(document).ready(function(){
                 text: 'Produzione Canali con ADR'
             },
             xAxis: [{
-                categories: scope.currentData.details.channelList,
+                categories: channels,
                 crosshair: true
             }],
             yAxis: [{ // Primary yAxis
@@ -101,7 +110,7 @@ jQuery(document).ready(function(){
                 name: 'Prenotazioni',
                 type: 'column',
                 yAxis: 1,
-                data: adrData.channelTotals,
+                data: channelsTotal,
                 tooltip: {
                     valueSuffix: ''
                 }
@@ -109,28 +118,12 @@ jQuery(document).ready(function(){
             }, {
                 name: 'ADR',
                 type: 'spline',
-                data: adrData.channelAdr,
+                data: channelsAdr,
                 tooltip: {
                     valueSuffix: '€'
                 }
             }]
         });
-    }
-    
-    function adrLookup(){
-        
-        var adrFormat = {
-            channelTotals: [],
-            channelAdr: []
-        }
-        
-        jQuery.each(scope.currentData.channelsGroup, function(key, value){
-            console.log(key);
-            console.log(value);
-        })
-        
-        
-        return adrFormat;
     }
     
     jQuery('.change-view').on('click', function(event){
