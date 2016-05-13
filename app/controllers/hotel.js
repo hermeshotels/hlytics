@@ -7,7 +7,7 @@ module.exports = function (app) {
 };
 
 router.get('/hotels/list', function (req, res, next) {
-    Hotel.getHotelShortList(function(err, hotels){
+    Hotel.getHotelShortList(req.user, function(err, hotels){
         if(err) throw err;
         res.json(hotels);
     });

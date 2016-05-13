@@ -16,9 +16,10 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db, callback) {
   db.createTable('user_hotel', {
-    id: {type: 'int', primaryKey: true, unique: true},
+    id: {type: 'int', primaryKey: true, unique: true, autoIncrement: true},
     user_id: {type: 'string', notNull: true, length: 100},
-    hotel_id: {type: 'string', notNull: true, length: 100}
+    hotel_id: {type: 'string', notNull: true, length: 100},
+    validated: {type: 'boolean', notNull: true, default: false}
   }, function(){
     db.addForeignKey('user_hotel', 'users', 'user_hotel_user_id_foreign', {
       'user_id': 'id'

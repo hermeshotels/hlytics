@@ -22,6 +22,49 @@
     }
 }
 
+.no-hotels{
+    display: none;
+    opacity: 0;
+    img{
+        width: 90px;
+        height: auto;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    h2{
+        font-weight: 500;
+        font-size: 1.8rem;
+        line-height: 28px;
+        small{
+            font-size: 70%;
+            color: rgba(0,0,0,0.6);
+            font-weight: 300;
+        }
+    }
+    
+    .tagsinput{
+        border-radius: 3px;
+        margin: 0 auto;
+        margin-top: 25px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom: 0;
+    }
+    
+    .button{
+        width: 300px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        height: 45px;
+    }
+    
+    #tags_tag{
+        padding: 0;
+        margin: 0;
+        line-height: 30px;
+    }
+}
+
 .header{
     height: 60px;
     line-height: 60px;

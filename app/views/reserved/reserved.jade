@@ -3,6 +3,7 @@ block viewcss
 	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css')
 	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/themes/tooltipster-noir.min.css')
 	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.4.0/css/pikaday.min.css')
+	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css')
 	link(rel='stylesheet', href='/css/reserved.css')
 	block subviewcss
 block content
@@ -62,11 +63,21 @@ block content
 								span Reports
 		
 		div(class="sub-view")
+			div(class="no-hotels")
+				div(class="row")
+					div(class="large-12 small-12 columns")
+						div(class="text-center")
+							img(src="/img/hey.svg")
+							h2 Hey... non hai ancora collegato nessun Hotel? <br>
+								small inserisci qui sotto i <strong class="tooltipstered" title="Se non conosci il tuo codice ID, richiedilo allo staff HermesHotels">codici ID</strong> degli Hotel che vuoi tracciare.
+							input(id="tags" name="tags")
+							button(class="button primary" id="trace-hotels") Traccia questi Hotels!
 			block subview
 				block subviewjs
 block viewjs
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js')
 	script(src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js")
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.4.0/css/pikaday.min.css')
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js')
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js')

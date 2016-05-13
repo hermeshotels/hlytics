@@ -4,6 +4,7 @@ var _ = require('lodash');
 var bcrypt = require('bcrypt');
 var pools = require('../../config/pools');
 var utils = require('./db_utils');
+var mysql = require('mysql');
 
 var TABLENAME = 'users';
 
@@ -36,16 +37,16 @@ module.exports = function(){
                 var builder = utils.buildInsertQuery(user, TABLENAME);
                 //Eseguo la query con i parametri generati
                 client.query(builder.query, builder.values, function executeQuery(err, result){
-                    if(err) return callback(err);
                     client.release();
+                    if(err) return callback(err);
                     delete user.password;
                     return callback(null, user);
                 });
             }else{
                 var builder = utils.buildUpdateQuery(user, TABLENAME, 'id');
                 client.query(builder.query, builder.values, function executeQuery(err, result){
-                    if(err) return callback(err);
                     client.release();
+                    if(err) return callback(err);
                     delete user.password;
                     return callback(null, user);
                 });
@@ -55,11 +56,29 @@ module.exports = function(){
     
     User.findById = function findById(id, callback){
          pools.lyticsPool.getConnection(function openDbConnection(err, client){
-             console.log(id);
             client.query('SELECT * FROM ' + TABLENAME + ' WHERE id=?', [id], function executeQuery(err, user){
                 client.release();
                 if(err) return callback(err);
                 return callback(null, user[0]);
+            });
+        });
+    }
+    /*
+    Richiede l'attivazione di un collegamento UTENTE -> HOTEL
+    */
+    User.addHotel = function(id, hotelids, callback){
+        pools.lyticsPool.getConnection(function openDbConnection(err, client){
+            var query = "INSERT INTO user_hotel (user_id, hotel_id, validated) VALUES ";
+            var inserts  = [];
+            hotelids.split(',').forEach(function(hotelid){
+                inserts.push("(" + mysql.escape(id) + "," + mysql.escape(hotelid) + "," + "0)");
+            });
+            query = query + inserts.join();
+            
+            client.query(query, function executeQuery(err, result){
+                client.release();
+                if(err) return callback(err);
+                return callback(null, result);
             });
         });
     }
@@ -68,8 +87,8 @@ module.exports = function(){
         pools.lyticsPool.getConnection(function openDbConnection(err, client){
            if(err) return callback(err);
            client.query('select * from ' + TABLENAME + ' where email = ?', [email], function executeQuery(err, user){
-              if(err) return callback(err);
               client.release();
+              if(err) return callback(err);
               if(user[0]){
                   return callback(null, user[0]);
               }else{
