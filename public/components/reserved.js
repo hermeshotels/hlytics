@@ -52,7 +52,7 @@ jQuery(document).ready(function () {
                 };
             },
             onSelect: function (suggestion) {
-                alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                populateDashboard(suggestion.data);
             }
         });
         
