@@ -12,3 +12,10 @@ router.post('/add/hotel/:hotelid', function (req, res, next) {
         res.json(result);
     })
 });
+
+router.get('/structures', function(req, res, next){
+  User.getUserStructures(req.user.id, function(err, result){
+    if(err) throw err;
+    res.json(result);
+  })
+})

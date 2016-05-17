@@ -142,8 +142,9 @@ function percentualDifference(){
         //Calcolo la differenza percentuale con il periodo precedente
         productionTotal = scope.currentData.details.productionTotal;
         adrTotal = scope.currentData.details.totalAdr;
-        productionDifference = ((scope.currentData.details.productionTotal - scope.previousData.details.productionTotal) / scope.previousData.details.productionTotal) * 100;
-        adrDifference = ((scope.currentData.details.totalAdr - scope.previousData.details.totalAdr) / scope.previousData.details.totalAdr ) * 100;    
+        productionDifference = ((scope.currentData.details.productionTotal - scope.previousData.details.productionTotal) / scope.previousData.details.productionTotal * 100);
+        adrDifference = ((scope.currentData.details.totalAdr - scope.previousData.details.totalAdr) / scope.previousData.details.totalAdr ) * 100;
+            
     }else{
         alertify.log("Stai visualizando i dati mensili.");
         productionTotal = scope.currentData.details.monthsProduction[scope.currentMonth].total;
@@ -158,18 +159,18 @@ function percentualDifference(){
     jQuery('#total-adr').text(numeral(adrTotal).format('$0,0.00'));
     
     if(productionDifference > 0){
-        jQuery('#total-variation').html('<i class="streamline-trending-up"></i> ' + numeral(productionDifference / 100).format('0.00%') + ' anno precendete.');
+        jQuery('#total-variation').html('<i class="streamline-trending-up"></i> ' + numeral(productionDifference / 100).format('00.00%') + ' anno precendete.');
         jQuery('#total-variation').addClass('text-success');
     }else{
-        jQuery('#total-variation').html('<i class="streamline-trending-down"></i> ' + numeral(productionDifference / 100).format('0.00%') + ' anno precendete.');
+        jQuery('#total-variation').html('<i class="streamline-trending-down"></i> ' + numeral(productionDifference / 100).format('00.00%') + ' anno precendete.');
         jQuery('#total-variation').addClass('text-danger');
     }
     
     if(adrDifference > 0){
-        jQuery('#adr-variation').html('<i class="streamline-trending-up"></i> ' + numeral(adrDifference / 100).format('0.00%') + ' anno precedente.');
+        jQuery('#adr-variation').html('<i class="streamline-trending-up"></i> ' + numeral(adrDifference / 100).format('00.00%') + ' anno precedente.');
         jQuery('#adr-variation').addClass('text-success');
     }else{
-        jQuery('#adr-variation').html('<i class="streamline-trending-down"></i> ' + numeral(adrDifference / 100).format('0.00%') + ' anno precedente.');
+        jQuery('#adr-variation').html('<i class="streamline-trending-down"></i> ' + numeral(adrDifference / 100).format('00.00%') + ' anno precedente.');
         jQuery('#adr-variation').addClass('text-danger');
     }
     

@@ -8,6 +8,23 @@
   position: relative;
   overflow-y: auto; }
 
+.page-container {
+  width: 100%;
+  background-color: #FFF;
+  border-radius: 3px;
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.1);
+  position: relative;
+  margin-bottom: 20px; }
+  .page-container .title {
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 80%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 600;
+    float: left;
+    color: rgba(0, 0, 0, 0.35); }
+
 .reserved-loading {
   position: absolute;
   width: 100%;

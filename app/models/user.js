@@ -98,6 +98,17 @@ module.exports = function(){
         });
     }
     
+    User.getUserStructures = function getUserStructures(id, callback){
+        pools.lyticsPool.getConnection(function openDbConnection(err, client){
+           if(err) return callback(err, null);
+           client.query('SELECT * FROM user_hotel uh INNER JOIN users u ON uh.user_id = u.id WHERE uh.user_id = ?', [id], function executeQuery(err, structures){
+               client.release();
+               if(err) return callback(err, null);
+               return callback(null, structures);
+           });
+        });
+    }
+    
     return User;   
     
 }
