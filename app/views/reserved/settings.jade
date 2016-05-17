@@ -8,7 +8,7 @@ block subview
         div(class="small-3 large-3 columns")
             div(class="side-menu")
                 div(class="side-header")
-                    i(class="streamline-location-user") 
+                    i(class="streamline-location-user")
                     span  Impostazioni Personali
                 ul
                     li(class=(current==='profile' ? 'active' : ''))
@@ -16,12 +16,10 @@ block subview
                     li(class=(current==='notifications' ? 'active' : ''))
                         a(href="/reserved/settings/notification") Notifiche
                     li(class=(current==='structures' ? 'active' : ''))
-                        a(href="/reserved/settings/structures") Strutture    
+                        a(href="/reserved/settings/structures") Strutture
                     li(class=(current==='email' ? 'active' : ''))
                         a(href="") Email
-                    
+
         div(class="small-9 large-9 columns")
             block settingpartial
-                            
-    block subviewjs
-        script(src='/components/profile.js')
+            block settingjspartial

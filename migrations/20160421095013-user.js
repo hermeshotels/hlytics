@@ -19,6 +19,7 @@ exports.up = function(db, callback) {
     id: {type: 'string', primaryKey: true, unique: true, length: 100},
     email: {type: 'string', notNull: true},
     password: {type: 'string', notNull: true},
+    level: {type: 'string', notNull: true, default: 'user'},
     active: {type: 'boolean'}
   }, function(){
     db.addIndex('users', 'user_index', 'id', callback);

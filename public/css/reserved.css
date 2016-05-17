@@ -8,6 +8,21 @@
   position: relative;
   overflow-y: auto; }
 
+table.dataTable thead th, table.dataTable thead td {
+  border-bottom: 1px solid #dedede; }
+
+table.dataTable thead th, table.dataTable tfoot th {
+  font-weight: 400; }
+
+table.dataTable.no-footer {
+  border-bottom: 1px solid #dedede; }
+
+.success {
+  color: #27ae60; }
+
+.warning {
+  color: #d35400; }
+
 .page-container {
   width: 100%;
   background-color: #FFF;
@@ -17,13 +32,22 @@
   margin-bottom: 20px; }
   .page-container .title {
     padding: 20px;
-    margin-bottom: 20px;
-    width: 80%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    line-height: 20px;
+    width: 90%;
+    padding-top: 15px;
+    padding-bottom: 15px;
     font-weight: 600;
     float: left;
     color: rgba(0, 0, 0, 0.35); }
+    .page-container .title .sub {
+      font-weight: 200; }
+  .page-container .info {
+    width: 10%;
+    float: left;
+    padding: 20px;
+    text-align: right; }
+  .page-container .content {
+    padding: 20px; }
 
 .reserved-loading {
   position: absolute;

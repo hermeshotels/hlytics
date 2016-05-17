@@ -9,6 +9,26 @@
     overflow-y: auto;
 }
 
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 1px solid #dedede;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: 400;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #dedede;
+}
+
+.success{
+  color: #27ae60;
+}
+
+.warning{
+  color: #d35400;
+}
+
 .page-container{
     width: 100%;
     background-color: #FFF;
@@ -18,13 +38,25 @@
     margin-bottom: 20px;
     .title{
         padding: 20px;
-        margin-bottom: 20px;
-        width: 80%;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        line-height: 20px;
+        width: 90%;
+        padding-top: 15px;
+        padding-bottom: 15px;
         font-weight: 600;
         float: left;
         color: rgba(0,0,0,0.350);
+        .sub{
+          font-weight: 200;
+        }
+    }
+    .info{
+      width: 10%;
+      float: left;
+      padding: 20px;
+      text-align: right;
+    }
+    .content{
+      padding: 20px;
     }
 }
 
@@ -61,7 +93,7 @@
             font-weight: 300;
         }
     }
-    
+
     .tagsinput{
         border-radius: 3px;
         margin: 0 auto;
@@ -70,14 +102,14 @@
         border-bottom-right-radius: 0px;
         border-bottom: 0;
     }
-    
+
     .button{
         width: 300px;
         border-top-left-radius: 0px;
         border-top-right-radius: 0px;
         height: 45px;
     }
-    
+
     #tags_tag{
         padding: 0;
         margin: 0;
@@ -90,13 +122,13 @@
     line-height: 60px;
     border-bottom: 1px solid #007EE5;
     background-color: #007EE5;
-    
+
     .logo{
         text-transform: uppercase;
         font-weight: 400;
         color: #FFF;
     }
-    
+
     ul{
         list-style: none;
         padding: 0;
@@ -117,7 +149,7 @@
             }
         }
     }
-    
+
 }
 
 .sub-header{
@@ -131,7 +163,7 @@
         line-height: 60px;
         height: 100%;
         li{
-            
+
             font-weight: 300;
             height: 100%;
             float: left;
@@ -149,7 +181,7 @@
                 vertical-align: middle;
                 margin-right: 6px;
             }
-            
+
             .pick-hotel{
                 line-height: 60px;
                 i{
@@ -175,13 +207,13 @@
                     }
                 }
             }
-            
+
         }
-        
+
         li.active{
             background-color: #f2f5f8;
         }
-        
+
     }
 }
 

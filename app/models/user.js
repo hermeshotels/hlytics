@@ -20,13 +20,13 @@ function HashPassword(password){
 }
 
 module.exports = function(){
-    
+
     var User = {};
-    
+
     User.comparePassword = function comparePassword(password, hash) {
         return bcrypt.compareSync(password, hash);
     }
-    
+
     User.save = function save(user, callback){
         pools.lyticsPool.getConnection(function openDbConnection(err, client){
             if(err) return callback(err);
@@ -53,7 +53,7 @@ module.exports = function(){
             }
         });
     }
-    
+
     User.findById = function findById(id, callback){
          pools.lyticsPool.getConnection(function openDbConnection(err, client){
             client.query('SELECT * FROM ' + TABLENAME + ' WHERE id=?', [id], function executeQuery(err, user){
@@ -74,7 +74,7 @@ module.exports = function(){
                 inserts.push("(" + mysql.escape(id) + "," + mysql.escape(hotelid) + "," + "0)");
             });
             query = query + inserts.join();
-            
+
             client.query(query, function executeQuery(err, result){
                 client.release();
                 if(err) return callback(err);
@@ -82,7 +82,7 @@ module.exports = function(){
             });
         });
     }
-    
+
     User.findByEmail = function(email, callback){
         pools.lyticsPool.getConnection(function openDbConnection(err, client){
            if(err) return callback(err);
@@ -97,18 +97,18 @@ module.exports = function(){
            });
         });
     }
-    
+
     User.getUserStructures = function getUserStructures(id, callback){
         pools.lyticsPool.getConnection(function openDbConnection(err, client){
            if(err) return callback(err, null);
-           client.query('SELECT * FROM user_hotel uh INNER JOIN users u ON uh.user_id = u.id WHERE uh.user_id = ?', [id], function executeQuery(err, structures){
+           client.query('SELECT uh.id, uh.hotel_id, uh.validated, uh.note FROM user_hotel uh WHERE uh.user_id = ?', [id], function executeQuery(err, structures){
                client.release();
                if(err) return callback(err, null);
                return callback(null, structures);
            });
         });
     }
-    
-    return User;   
-    
+
+    return User;
+
 }

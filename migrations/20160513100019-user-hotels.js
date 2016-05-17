@@ -19,7 +19,8 @@ exports.up = function(db, callback) {
     id: {type: 'int', primaryKey: true, unique: true, autoIncrement: true},
     user_id: {type: 'string', notNull: true, length: 100},
     hotel_id: {type: 'string', notNull: true, length: 100},
-    validated: {type: 'boolean', notNull: true, default: false}
+    validated: {type: 'boolean', notNull: true, default: false},
+    note: {type: 'text', notNull: false}
   }, function(){
     db.addForeignKey('user_hotel', 'users', 'user_hotel_user_id_foreign', {
       'user_id': 'id'
