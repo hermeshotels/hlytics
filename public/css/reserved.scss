@@ -21,11 +21,11 @@ table.dataTable.no-footer {
     border-bottom: 1px solid #dedede;
 }
 
-.success{
+.t-success{
   color: #27ae60;
 }
 
-.warning{
+.t-warning{
   color: #d35400;
 }
 
@@ -57,6 +57,9 @@ table.dataTable.no-footer {
     }
     .content{
       padding: 20px;
+    }
+    .actions{
+      margin-top: 20px;
     }
 }
 

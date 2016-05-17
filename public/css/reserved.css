@@ -17,10 +17,10 @@ table.dataTable thead th, table.dataTable tfoot th {
 table.dataTable.no-footer {
   border-bottom: 1px solid #dedede; }
 
-.success {
+.t-success {
   color: #27ae60; }
 
-.warning {
+.t-warning {
   color: #d35400; }
 
 .page-container {
@@ -48,6 +48,8 @@ table.dataTable.no-footer {
     text-align: right; }
   .page-container .content {
     padding: 20px; }
+  .page-container .actions {
+    margin-top: 20px; }
 
 .reserved-loading {
   position: absolute;

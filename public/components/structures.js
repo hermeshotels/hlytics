@@ -12,9 +12,9 @@ jQuery(document).ready(function(){
               { data: "hotel_id", title:"Hotel ID" },
               { data: "validated", title: "Stato attivazione", createdCell: function(td, cellData, rowData, row, col){
                 if(cellData){
-                  jQuery(td).text('Attivo').addClass('success');
+                  jQuery(td).text('Attivo').addClass('t-success');
                 }else{
-                  jQuery(td).text('In revisione').addClass('warning');
+                  jQuery(td).text('In revisione').addClass('t-warning');
                 }
 
               }},
@@ -23,6 +23,25 @@ jQuery(document).ready(function(){
       });
     });
 
-
+    jQuery('.add-structure').on('click', function(e){
+      e.preventDefault();
+      alertify.defaultValue("0").prompt("Digita l'ID della struttura che vuoi aggiungere",
+          function (val, ev) {
+            // The click event is in the event variable, so you can use it here.
+            ev.preventDefault();
+            //provo ad aggiungere l'hotel
+            superagent.post('/api/users/add/hotel').send({hotelid: val}).end(function(err, res){
+              if(err || !res.ok){
+                alertify.error("Aggiunta struttura annullata.");
+              }else{
+                alertify.success("Richiesto di collegamento per l'id: " + val);
+              }
+            });
+          }, function(ev) {
+            // The click event is in the event variable, so you can use it here.
+            ev.preventDefault();
+            alertify.error("Aggiunta struttura annullata.");
+          });
+    });
 
 });

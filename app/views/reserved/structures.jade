@@ -3,12 +3,14 @@ block settingpartial
     div(class="page-container")
         div(class="row")
             div(class="small-12 large-12 columns")
-                div(class="title") Gestione Strutture associate <br>
-                  span(class="sub") qui puoi visualizzare tutte le strutture associate al tuo account e il relativo stato di attivazione
-                div(class="info")
-                    i(class="streamline-infomation-circle tooltipstered" title="Per assicurarci del corretto collegamento delle strutture revisioniamo tutte le richieste effettuate!")
-                div(class="clear-fix")
-                div(class="content")
-                  table(id="structures")
+              div(class="title") Gestione Strutture associate <br>
+                span(class="sub") qui puoi visualizzare tutte le strutture associate al tuo account e il relativo stato di attivazione
+              div(class="info")
+                  i(class="streamline-infomation-circle tooltipstered" title="Per assicurarci del corretto collegamento delle strutture revisioniamo tutte le richieste effettuate!")
+              div(class="clear-fix")
+              div(class="content")
+                table(id="structures")
+                div(class="actions")
+                  button(class="button primary add-structure") Collega struttura
   block settingjspartial
     script(src="/components/structures.js")

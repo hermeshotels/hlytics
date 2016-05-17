@@ -5,10 +5,13 @@ var startCurrent = moment().startOf('year').format('YYYYMMDD0000');
 var endCurrent = moment().endOf('year').format('YYYYMMDD0000');
 
 var startPrevious = moment().startOf('year').subtract(1, 'years').format('YYYYMMDD0000');
-var endPrevious = moment().endOf('year').subtract(1, 'years').format('YYYYMMDD0000');
+var endPrevious = moment().endOf('year').subtract(1, 'years').format('YYYYMMDD2359');
+
+console.log(startPrevious);
+console.log(endPrevious);
 
 var start = moment().startOf('year').format('YYYYMMDD0000');
-var end = moment().startOf('year').format('YYYYMMDD0000');
+var end = moment().startOf('year').format('YYYYMMDD2359');
 
 var scope = {
     currentHotel: 0,
@@ -27,22 +30,22 @@ function populateDashboard(hotelId){
     superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + startCurrent + '/to/' + endCurrent)
     .end(function(err, res){
         if(err) console.debug(err);
-        
+
         scope.currentData = res.body;
         //setup the graph
         channelAdrGraph();
-        
-        superagent.get('/api/hotels/1684/production/channel/from/' + startPrevious + '/to/' + endPrevious)
+
+        superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + startPrevious + '/to/' + endPrevious)
             .end(function(err, res){
                 if(err) console.debug(err);
                 scope.previousData = res.body;
-                
+
                 percentualDifference();
                 dashboardTl.play();
                 document.dispatchEvent(loading);
             });
 
-    });   
+    });
 }
 
 function channelAdrGraph(){
@@ -51,13 +54,13 @@ function channelAdrGraph(){
     var channels = [];
     var channelsTotal = [];
     var channelsAdr = [];
-    
+
     var channelLabels = $.map(scope.currentData.details.channelsGroup, function(v, i){
         channels.push(i);
         channelsTotal.push(v.total);
         channelsAdr.push(v.adr);
     });
-    
+
     jQuery('#channel-adr-chart').highcharts({
         chart: {
             zoomType: 'xy'
@@ -130,12 +133,12 @@ function channelAdrGraph(){
 }
 
 function percentualDifference(){
-        
+
     var productionTotal = 0;
     var adrTotal = 0;
     var productionDifference = 0;
     var adrDifference = 0;
-    
+
     if(scope.productionView == 'year'){
         alertify.log("Stai visualizando i dati annuali.");
         //Imposto il valore della produzione
@@ -144,7 +147,7 @@ function percentualDifference(){
         adrTotal = scope.currentData.details.totalAdr;
         productionDifference = ((scope.currentData.details.productionTotal - scope.previousData.details.productionTotal) / scope.previousData.details.productionTotal * 100);
         adrDifference = ((scope.currentData.details.totalAdr - scope.previousData.details.totalAdr) / scope.previousData.details.totalAdr ) * 100;
-            
+
     }else{
         alertify.log("Stai visualizando i dati mensili.");
         productionTotal = scope.currentData.details.monthsProduction[scope.currentMonth].total;
@@ -152,12 +155,12 @@ function percentualDifference(){
         productionDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].total - scope.previousData.details.monthsProduction[scope.currentMonth].total) / scope.previousData.details.monthsProduction[scope.currentMonth].total) * 100;
         adrDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].adr - scope.previousData.details.monthsProduction[scope.currentMonth].adr) / scope.previousData.details.monthsProduction[scope.currentMonth].adr ) * 100;
     }
-    
-    
-    
+
+
+
     jQuery('#total-production').text(numeral(productionTotal).format('$0,0.00'));
     jQuery('#total-adr').text(numeral(adrTotal).format('$0,0.00'));
-    
+
     if(productionDifference > 0){
         jQuery('#total-variation').html('<i class="streamline-trending-up"></i> ' + numeral(productionDifference / 100).format('00.00%') + ' anno precendete.');
         jQuery('#total-variation').addClass('text-success');
@@ -165,7 +168,7 @@ function percentualDifference(){
         jQuery('#total-variation').html('<i class="streamline-trending-down"></i> ' + numeral(productionDifference / 100).format('00.00%') + ' anno precendete.');
         jQuery('#total-variation').addClass('text-danger');
     }
-    
+
     if(adrDifference > 0){
         jQuery('#adr-variation').html('<i class="streamline-trending-up"></i> ' + numeral(adrDifference / 100).format('00.00%') + ' anno precedente.');
         jQuery('#adr-variation').addClass('text-success');
@@ -173,18 +176,18 @@ function percentualDifference(){
         jQuery('#adr-variation').html('<i class="streamline-trending-down"></i> ' + numeral(adrDifference / 100).format('00.00%') + ' anno precedente.');
         jQuery('#adr-variation').addClass('text-danger');
     }
-    
+
 }
-    
+
 
 
 jQuery(document).ready(function(){
-    
+
     alertify.log("Bentornato.");
     jQuery('.change-view').on('click', function(event){
         event.preventDefault();
         scope.productionView = jQuery(this).data('type');
         percentualDifference();
     })
-    
+
 });
