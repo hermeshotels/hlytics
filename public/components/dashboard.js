@@ -93,7 +93,7 @@ function populateDashboard(hotelId){
         //setup the graph
         channelAdrGraph();
 
-        superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + moment(scope.startDate).subtract(1, 'years').format('YYYYMMDD0000') + '/to/' + moment(scope.endDate).subtract(1, 'years').format('YYYYMMDD2359'))
+        superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + moment(scope.startDate).subtract(1, 'years').format('YYYYMMDD0000') + '/to/' + moment().endOf('year').subtract(1, 'years').format('YYYYMMDD2359'))
             .end(function(err, res){
                 if(err) console.debug(err);
                 scope.previousData = res.body;

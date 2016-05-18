@@ -13,6 +13,13 @@ router.get('/hotels/list', function (req, res, next) {
     });
 });
 
+router.get('/hotels/:id/bol/conversion/', function(req, res, next){
+  Hotel.getHotelBolConversion(req.params.id, function(err, conversion){
+    if(err) throw err;
+    res.json(conversion);
+  })
+})
+
 /*
 Report di produzione della struttura.
 Ritorna tutte le prenotazioni attive (O,M) per il periodo selezionato con il relativo importo
