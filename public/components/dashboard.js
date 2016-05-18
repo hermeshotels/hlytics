@@ -83,7 +83,6 @@ function populateDashboard(hotelId){
     if(hotelId){
       scope.currentHotel = hotelId;
     }
-    console.log(scope.currentHotel);
     //Recupero i dati necessari alla popolazione della dashboard
     superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + moment(scope.startDate).format('YYYYMMDD0000') + '/to/' + moment(scope.endDate).format('YYYYMMDD2359'))
     .end(function(err, res){
