@@ -1,13 +1,6 @@
-var dashboardTl = new TimelineMax();
-dashboardTl.stop().to('.dashboard-wrapper', 0, {opacity: 1});
-
-var startCurrent = moment().startOf('year').format('YYYYMMDD0000');
-var endCurrent = moment().endOf('year').format('YYYYMMDD0000');
-
-var startPrevious = moment().startOf('year').subtract(1, 'years').format('YYYYMMDD0000');
-var endPrevious = moment().endOf('year').subtract(1, 'years').format('YYYYMMDD2359');
-
 var scope = {
+    startDate: moment().startOf('year'),
+    endDate: moment(),
     currentHotel: 0,
     currentData: null,
     previousData: null,
@@ -22,6 +15,48 @@ var scope = {
     productionView: 'year',
     adrView: 'year'
 };
+
+var dashboardTl = new TimelineMax();
+dashboardTl.stop().to('.dashboard-wrapper', 0, {opacity: 1});
+
+var startPicker = new Pikaday({
+  field: document.getElementById('startDate'),
+  defaultDate: moment().startOf('year').toDate(),
+  setDefaultDate: true,
+  onSelect: function(date){
+    updateDates(date, null);
+  }
+});
+
+var endPicker = new Pikaday({
+  field: document.getElementById('endDate'),
+  defaultDate: moment().toDate(),
+  setDefaultDate: true,
+  onSelect: function(date){
+    updateDates(null, date);
+  }
+});
+
+function updateDates(startDate, endDate){
+  if(startDate){
+    scope.startDate = moment(startDate);
+  }
+  if(endDate){
+    scope.endDate = moment(endDate);
+  }
+
+  console.log(scope.startDate);
+  console.log(scope.endDate);
+
+  if(scope.startDate > scope.endDate){
+    //impossibile
+    alertify.error("La data di inzio non può essere maggiore della data di fine.");
+  }else{
+    populateDashboard();
+  }
+}
+
+
 
 rivets.formatters.currency = function(value){
   return numeral(value).format('$0,0.00');
@@ -45,9 +80,12 @@ rivets.bind(jQuery('#dashboard'), {scope: scope});
 function populateDashboard(hotelId){
     var loading = new Event('loading');
     document.dispatchEvent(loading);
-    scope.currentHotel = hotelId;
+    if(hotelId){
+      scope.currentHotel = hotelId;
+    }
+    console.log(scope.currentHotel);
     //Recupero i dati necessari alla popolazione della dashboard
-    superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + startCurrent + '/to/' + endCurrent)
+    superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + moment(scope.startDate).format('YYYYMMDD0000') + '/to/' + moment(scope.endDate).format('YYYYMMDD2359'))
     .end(function(err, res){
         if(err) console.debug(err);
 
@@ -55,7 +93,7 @@ function populateDashboard(hotelId){
         //setup the graph
         channelAdrGraph();
 
-        superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + startPrevious + '/to/' + endPrevious)
+        superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + moment(scope.startDate).subtract(1, 'years').format('YYYYMMDD0000') + '/to/' + moment(scope.endDate).subtract(1, 'years').format('YYYYMMDD2359'))
             .end(function(err, res){
                 if(err) console.debug(err);
                 scope.previousData = res.body;
@@ -194,6 +232,7 @@ jQuery(document).ready(function(){
 
 
     alertify.log("Bentornato.");
+    alertify.log("Seleziona un Hotel per visualizzare i dati.");
     jQuery('.change-view').on('click', function(event){
         event.preventDefault();
         scope.view = jQuery(this).data('type');

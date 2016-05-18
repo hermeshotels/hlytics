@@ -1,5 +1,7 @@
 jQuery(document).ready(function () {
 
+    moment.locale('it');
+
     var noHotelTl = new TimelineMax();
             noHotelTl.stop().to('.dashboard-wrapper', 0, {display: 'none'})
                 .to('.no-hotels', 0 , {display: 'block'})

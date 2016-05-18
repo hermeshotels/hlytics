@@ -97,7 +97,20 @@ module.exports = function(){
                        nightsTotal: 0,
                        totalAdr: 0,
                        channelsGroup: {},
-                       monthsProduction: {}
+                       monthsProduction: {
+                         "1": {"total": 0,"nights": 0,"adr": 0},
+                         "2": {"total": 0,"nights": 0,"adr": 0},
+                         "3": {"total": 0,"nights": 0,"adr": 0},
+                         "4": {"total": 0,"nights": 0,"adr": 0},
+                         "5": {"total": 0,"nights": 0,"adr": 0},
+                         "6": {"total": 0,"nights": 0,"adr": 0},
+                         "7": {"total": 0,"nights": 0,"adr": 0},
+                         "8": {"total": 0,"nights": 0,"adr": 0},
+                         "9": {"total": 0,"nights": 0,"adr": 0},
+                         "10": {"total": 0,"nights": 0,"adr": 0},
+                         "11": {"total": 0,"nights": 0,"adr": 0},
+                         "12": {"total": 0,"nights": 0,"adr": 0}
+                       }
                    }
                };
 
@@ -135,11 +148,20 @@ module.exports = function(){
                });
 
                _.forEach(data.details.channelsGroup, function(channel){
+
+                 if(channel.total > 0 && channel.nights > 0){
                    channel.adr = channel.total / channel.nights;
+                 }else{
+                   channel.adr = 0;
+                 }
                });
 
                _.forEach(data.details.monthsProduction, function(month){
-                   month.adr = month.total / month.nights;
+                   if(month.total > 0 && month.nights > 0){
+                     month.adr = month.total / month.nights;
+                   }else{
+                     month.adr = 0;
+                   }
                })
 
                return callback(null, data);
@@ -151,4 +173,3 @@ module.exports = function(){
     return Hotel;
 
 }
-

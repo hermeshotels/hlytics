@@ -9,6 +9,46 @@
     overflow-y: auto;
 }
 
+.filters{
+  margin-bottom: 20px;
+}
+
+.filters.date{
+  input{
+    border: 0;
+    display: inline-block;
+    width: 150px;
+    background-color: inherit;
+    text-align: center;
+    font-weight: 300;
+    color: #007EE5;
+    cursor: pointer;
+    min-width: auto;
+    margin-bottom: 0;
+    padding: 0;
+    height: auto;
+  }
+  ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #dedede;
+    width: 100%;
+    li{
+      border-radius: 3px;
+      padding: 0.5em;
+      font-weight: 300;
+      display: inline-block;
+      i{
+        margin-right: 8px;
+      }
+      &:nth-child(2){
+        float: right;
+      }
+    }
+  }
+}
+
 table.dataTable thead th, table.dataTable thead td {
     border-bottom: 1px solid #dedede;
 }
