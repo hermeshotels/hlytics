@@ -4,7 +4,7 @@ block subviewcss
     link(rel='stylesheet', href='/css/dashboard.css')
 
 block subview
-    div(class="dashboard-wrapper")
+    div(class="dashboard-wrapper" id="dashboard")
         div(class="row")
             div(class="small-4 large-4 columns")
                 div(class="card")
@@ -13,14 +13,14 @@ block subview
                     div(class="info")
                         i(class="streamline-infomation-circle tooltipstered" title="Il fatturato comprende tutte le vendite su tutti i canali disponibili.")
                     div(class="content")
-                        div(class="number" id="total-production") € 0,00
-                        div(class="variation" id="total-variation") +50% mese precedente
+                        div(class="number" id="total-production") { scope.currentProductionTotal | currency }
+                        div(class="variation" id="total-variation" rv-posneg="scope.currentTotalDifference") { scope.currentTotalDifference | percent } { scope.differenceMessage }
                     div(class="functions")
                         ul
                             li(class="change-view" data-type="week") Settimana
                             li(class="change-view" data-type="month") Mese
                             li(class="change-view" data-type="year") Anno
-                            
+
             div(class="small-4 large-4 columns")
                 div(class="card")
                     div(class="share-overlay")
@@ -40,7 +40,7 @@ block subview
                             li(class="change-view" data-type="week") Settimana
                             li(class="change-view" data-type="month") Mese
                             li(class="change-view" data-type="year") Anno
-                            
+
             div(class="small-4 large-4 columns")
                 div(class="card")
                     div(class="share-overlay")
@@ -48,8 +48,8 @@ block subview
                     div(class="info")
                         i(class="streamline-infomation-circle tooltipstered" title="L'ADR visualizzato è relativo alla media di tutti i canli di vendita disponibili.")
                     div(class="content")
-                        div(class="number" id="total-adr") € 0,00
-                        div(class="variation" id="adr-variation") +50% mese precedente
+                        div(class="number" id="total-adr") { scope.currentAdrTotal | currency }
+                        div(class="variation" id="adr-variation" rv-posneg="scope.currentAdrDifference") { scope.currentAdrDifference | percent } { scope.differenceMessage }
                     div(class="functions")
                         ul
                             li(class="change-view" data-type="week") Settimana
@@ -70,6 +70,6 @@ block subview
                             li(class="change-view" data-type="week") Settimana
                             li(class="change-view" data-type="month") Mese
                             li(class="change-view" data-type="year") Anno
-                            
+
     block subviewjs
         script(src='/components/dashboard.js')

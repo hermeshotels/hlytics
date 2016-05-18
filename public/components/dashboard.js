@@ -7,20 +7,40 @@ var endCurrent = moment().endOf('year').format('YYYYMMDD0000');
 var startPrevious = moment().startOf('year').subtract(1, 'years').format('YYYYMMDD0000');
 var endPrevious = moment().endOf('year').subtract(1, 'years').format('YYYYMMDD2359');
 
-console.log(startPrevious);
-console.log(endPrevious);
-
-var start = moment().startOf('year').format('YYYYMMDD0000');
-var end = moment().startOf('year').format('YYYYMMDD2359');
-
 var scope = {
     currentHotel: 0,
     currentData: null,
     previousData: null,
+    currentProductionTotal: 0,
+    previousProductionTotal: 0,
+    currentAdrTotal: 0,
+    previousAdrTotal: 0,
+    currentTotalDifference: 0,
+    currentAdrDifference: 0,
     currentMonth: moment().format('M'),
+    view: 'year',
     productionView: 'year',
     adrView: 'year'
 };
+
+rivets.formatters.currency = function(value){
+  return numeral(value).format('$0,0.00');
+}
+rivets.formatters.percent = function(value){
+  return numeral(value / 100).format('00.00%');
+}
+rivets.binders.posneg = function(el, value) {
+  console.log(value);
+  if(value > 0){
+    jQuery(el).removeClass('t-warning');
+    jQuery(el).addClass('t-success');
+  }else{
+    jQuery(el).removeClass('t-success');
+    jQuery(el).addClass('t-warning');
+  }
+}
+
+rivets.bind(jQuery('#dashboard'), {scope: scope});
 
 function populateDashboard(hotelId){
     var loading = new Event('loading');
@@ -39,8 +59,8 @@ function populateDashboard(hotelId){
             .end(function(err, res){
                 if(err) console.debug(err);
                 scope.previousData = res.body;
-
                 percentualDifference();
+                setStatisticsData();
                 dashboardTl.play();
                 document.dispatchEvent(loading);
             });
@@ -134,60 +154,50 @@ function channelAdrGraph(){
 
 function percentualDifference(){
 
-    var productionTotal = 0;
-    var adrTotal = 0;
-    var productionDifference = 0;
-    var adrDifference = 0;
-
-    if(scope.productionView == 'year'){
-        alertify.log("Stai visualizando i dati annuali.");
-        //Imposto il valore della produzione
-        //Calcolo la differenza percentuale con il periodo precedente
-        productionTotal = scope.currentData.details.productionTotal;
-        adrTotal = scope.currentData.details.totalAdr;
-        productionDifference = ((scope.currentData.details.productionTotal - scope.previousData.details.productionTotal) / scope.previousData.details.productionTotal * 100);
-        adrDifference = ((scope.currentData.details.totalAdr - scope.previousData.details.totalAdr) / scope.previousData.details.totalAdr ) * 100;
-
-    }else{
-        alertify.log("Stai visualizando i dati mensili.");
-        productionTotal = scope.currentData.details.monthsProduction[scope.currentMonth].total;
-        adrTotal = scope.currentData.details.monthsProduction[scope.currentMonth].adr;
-        productionDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].total - scope.previousData.details.monthsProduction[scope.currentMonth].total) / scope.previousData.details.monthsProduction[scope.currentMonth].total) * 100;
-        adrDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].adr - scope.previousData.details.monthsProduction[scope.currentMonth].adr) / scope.previousData.details.monthsProduction[scope.currentMonth].adr ) * 100;
-    }
-
-
-
-    jQuery('#total-production').text(numeral(productionTotal).format('$0,0.00'));
-    jQuery('#total-adr').text(numeral(adrTotal).format('$0,0.00'));
-
-    if(productionDifference > 0){
-        jQuery('#total-variation').html('<i class="streamline-trending-up"></i> ' + numeral(productionDifference / 100).format('00.00%') + ' anno precendete.');
-        jQuery('#total-variation').addClass('text-success');
-    }else{
-        jQuery('#total-variation').html('<i class="streamline-trending-down"></i> ' + numeral(productionDifference / 100).format('00.00%') + ' anno precendete.');
-        jQuery('#total-variation').addClass('text-danger');
-    }
-
-    if(adrDifference > 0){
-        jQuery('#adr-variation').html('<i class="streamline-trending-up"></i> ' + numeral(adrDifference / 100).format('00.00%') + ' anno precedente.');
-        jQuery('#adr-variation').addClass('text-success');
-    }else{
-        jQuery('#adr-variation').html('<i class="streamline-trending-down"></i> ' + numeral(adrDifference / 100).format('00.00%') + ' anno precedente.');
-        jQuery('#adr-variation').addClass('text-danger');
-    }
+    scope.yearlyProductionDifference = ((scope.currentData.details.productionTotal - scope.previousData.details.productionTotal) / scope.previousData.details.productionTotal * 100);
+    scope.yearlyAdrDifference = ((scope.currentData.details.totalAdr - scope.previousData.details.totalAdr) / scope.previousData.details.totalAdr ) * 100
+    scope.monthlyProductionDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].total - scope.previousData.details.monthsProduction[scope.currentMonth].total) / scope.previousData.details.monthsProduction[scope.currentMonth].total) * 100;
+    scope.monthlyAdrDifference = ((scope.currentData.details.monthsProduction[scope.currentMonth].adr - scope.previousData.details.monthsProduction[scope.currentMonth].adr) / scope.previousData.details.monthsProduction[scope.currentMonth].adr ) * 100;
 
 }
 
+function setStatisticsData(){
+  if(scope.view == 'month'){
+    //totale della produzione
+    scope.currentProductionTotal = scope.currentData.details.monthsProduction[scope.currentMonth].total;
+    scope.previousProductionTotal = scope.previousData.details.monthsProduction[scope.currentMonth].total;
+    //totale adr
+    scope.currentAdrTotal = scope.currentData.details.monthsProduction[scope.currentMonth].adr;
+    scope.previousAdrTotal = scope.previousData.details.monthsProduction[scope.currentMonth].adr;
+    //differenza di produzione
+    scope.currentTotalDifference = scope.monthlyProductionDifference;
+    //differenza di adr
+    scope.currentAdrDifference = scope.monthlyAdrDifference;
+    scope.differenceMessage = moment().format('MMMM') + ' del ' + moment().subtract(1, 'years').format('YYYY');
+  }else if(scope.view == 'year'){
+    //totale della produzione
+    scope.currentProductionTotal = scope.currentData.details.productionTotal;
+    scope.previousProductionTotal = scope.previousData.details.productionTotal;
+    //totale adr
+    scope.currentAdrTotal = scope.currentData.details.totalAdr;
+    scope.previousAdrTotal = scope.previousData.details.totalAdr;
+    //differenza di produzione
+    scope.currentTotalDifference = scope.yearlyProductionDifference;
+    //differenza di adr
+    scope.currentAdrDifference = scope.yearlyAdrDifference;
+    scope.differenceMessage = ' su anno ' + moment().subtract(1, 'years').format('YYYY');
+  }
+}
 
 
 jQuery(document).ready(function(){
 
+
     alertify.log("Bentornato.");
     jQuery('.change-view').on('click', function(event){
         event.preventDefault();
-        scope.productionView = jQuery(this).data('type');
-        percentualDifference();
-    })
+        scope.view = jQuery(this).data('type');
+        setStatisticsData();
+    });
 
 });
