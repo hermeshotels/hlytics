@@ -101,7 +101,6 @@ function populateDashboard(hotelId){
                 dashboardTl.play();
                 document.dispatchEvent(loading);
             });
-
     });
 }
 
