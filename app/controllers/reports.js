@@ -8,3 +8,7 @@ module.exports = function (app) {
 router.get('/reports', function (req, res, next) {
 	res.render('reserved/reports');
 });
+
+router.get('/reports/list/structures', function(req, res, next){
+  res.render('reserved/reports/active_structures');
+});
