@@ -84,6 +84,14 @@ function populateDashboard(hotelId){
       scope.currentHotel = hotelId;
     }
     //Recupero i dati necessari alla popolazione della dashboard
+
+    superagent.get('/api/hotels/' + scope.currentHotel + '/bol/conversion')
+      .end(function(err, res){
+        if(err) console.debug(err);
+
+        scope.bolConversion = res.body.conversion;
+      });
+
     superagent.get('/api/hotels/' + scope.currentHotel + '/production/channel/from/' + moment(scope.startDate).format('YYYYMMDD0000') + '/to/' + moment(scope.endDate).format('YYYYMMDD2359'))
     .end(function(err, res){
         if(err) console.debug(err);

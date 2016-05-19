@@ -175,9 +175,9 @@ module.exports = function(){
       var query = "select COUNT(*) + COALESCE(pra.conteggio, 0) as requests," +
         	"COALESCE(res.conteggio, 0) as reservations " +
         	"FROM pr_richieste as pr " +
-        	"LEFT JOIN ( SELECT COUNT(*) as conteggio, rp_ho from pr_richieste_appoggio where rp_stato = 'F' and rp_ho = ? and rp_data >= '" + moment().startOf('month').format('YYYYMMDD0000') + "' and rp_data <= '" + moment().endOf('month').format('YYYYMMDD2359') + "') as pra ON pr.rp_ho = pra.rp_ho " +
+        	"LEFT JOIN ( SELECT COUNT(*) as conteggio, rp_ho from pr_richieste_appoggio where rp_ho = ? and rp_data >= '" + moment().startOf('month').format('YYYYMMDD0000') + "' and rp_data <= '" + moment().endOf('month').format('YYYYMMDD2359') + "') as pra ON pr.rp_ho = pra.rp_ho " +
         	"LEFT JOIN ( SELECT COUNT(*) as conteggio, HO_ID from prenotazioni where PR_STATUS IN ('O', 'M') AND ho_id = ? AND PR_DATA_AGG >= '" + moment().startOf('month').format('YYYYMMDD0000') + "' AND PR_DATA_AGG <= '" + moment().endOf('month').format('YYYYMMDD2359') + "') as res ON pr.rp_ho = res.HO_ID " +
-        	"WHERE pr.rp_ho = ? AND pr.rp_stato = 'F'";
+        	"WHERE pr.rp_ho = ?";
 
       pools.hermesPool.getConnection(function openDbConnection(err, client){
         if(err) return callback(err, null);
@@ -190,6 +190,9 @@ module.exports = function(){
       });
 
     }
+
+    /**/
+    Hotel.getActiveHotels = function(callback){}
 
     return Hotel;
 

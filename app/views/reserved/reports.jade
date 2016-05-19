@@ -4,9 +4,15 @@ block subviewcss
     link(rel='stylesheet', href='/css/reports.css')
 
 block subview
-    div(class="row")
-        div(class="small-3 large-3 columns")
-            p r1
-            
+    div(class="reports-view")
+      div(class="row")
+          div(class="small-12 large-12 columns")
+              ul(class="reports-list")
+                li
+                  div(class="title") Strutture Attive
+                  div(class="description")
+                    p Strutture attive su hermes con prenotazioni nell'ultimo mese.
+                  div(class="generate") Elabora
+
     block subviewjs
             script(src='/components/resports.js')
