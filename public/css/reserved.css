@@ -1187,3 +1187,9 @@ table.dataTable.no-footer {
     background-clip: padding-box;
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); } }
+h3.section-title {
+  font-weight: 500;
+  margin-bottom: 20px;
+  font-size: 1.6rem; }
+  h3.section-title i {
+    margin-right: 10px; }

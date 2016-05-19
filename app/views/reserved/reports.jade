@@ -5,14 +5,32 @@ block subviewcss
 
 block subview
     div(class="reports-view")
-      div(class="row")
+      div(class="report-section" id="structures")
+        div(class="row")
+          div(class="small-12 large-12 columns")
+            h3(class="section-title") #[i(class="streamline-hotel-five-stars")] Strutture
+
+        div(class="row")
+            div(class="small-12 large-12 columns")
+                ul(class="reports-list")
+                  li
+                    div(class="title") Strutture Attive
+                    div(class="description")
+                      p Strutture attive su hermes con prenotazioni nell'ultimo mese.
+                    a(class="generate" href="/reserved/reports/list/structures") Elabora
+
+      div(class="report-section" id="rooms")
+        div(class="row")
+          div(class="small-12 large-12 columns")
+            h3(class="section-title") #[i(class="streamline-hotel-five-stars")] Camere
           div(class="small-12 large-12 columns")
               ul(class="reports-list")
                 li
-                  div(class="title") Strutture Attive
+                  div(class="title") Analisi Tariffe-Camere
                   div(class="description")
-                    p Strutture attive su hermes con prenotazioni nell'ultimo mese.
+                    p Il report mostra il totale di camere vendute per ogni tariffa e relativo livello.
                   a(class="generate" href="/reserved/reports/list/structures") Elabora
+
 
     block subviewjs
             script(src='/components/resports.js')
