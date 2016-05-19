@@ -219,6 +219,52 @@ module.exports = function(){
       });
     }
 
+    Hotel.getHotelOccupancy = function(id, dateFrom, dateTo, dateType, callback){
+
+      var query = "SELECT p.pr_id, p.pr_datada as dateFrom, p.pr_dataa as dateTo, p.pr_data_agg as booked, DAYOFWEEK(DATE_FORMAT(p.pr_datada, '%Y%m%d')) as weekday, DATEDIFF(DATE_FORMAT(p.pr_dataa, '%Y%m%d'), DATE_FORMAT(pr_datada, '%Y%m%d')) as nights, SUM(s.SC_TOTALE) as total " +
+      "FROM prenotazioni p " +
+      "LEFT JOIN scorporo as s ON p.PR_ID = s.PR_ID " +
+      "WHERE p.ho_ID = ? " +
+      "AND p.pr_status in ('O', 'M') ";
+
+      switch (dateType) {
+        case "arrival":
+          query += "AND pr_datada >= ? and pr_dataa <= ?";
+          break;
+        case "departure":
+          query += "AND pr_dataa >= ? and pr_dataa <= ?";
+          break;
+        case "booking":
+          query += "AND pr_data_agg >= ? and pr_data_agg <= ?";
+          break;
+        default:
+          query += "AND pr_data_agg >= ? and pr_data_agg <= ?";
+          break;
+      }
+
+      query += "GROUP BY p.PR_ID";
+
+      pools.hermesPool.getConnection(function openDbConnection(err, client){
+        if(err) return callback(err, null);
+        client.query(query, [id, dateFrom, dateTo], function executeQuery(err, reservations){
+          if(err) return callback(err, null);
+          client.release();
+          //Recuperato tutte le prenotazioni per il periodo specificato
+
+          _.forEach(reservations, function(reservation){
+            var arrival = moment(reservation.dateFrom, 'YYYYMMDD');
+            var departure = moment(reservation.dateTo, 'YYYYMMDD');
+            //Calcolo la booking window
+            reservation.booking_window = departure.diff(arrival, 'days');
+            //Calcolo ADR
+            reservation.adr = reservation.total / reservation.nights;
+          })
+          return callback(null, reservations);
+
+
+        });
+      });
+    }
     return Hotel;
 
 }

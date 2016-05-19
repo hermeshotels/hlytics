@@ -27,6 +27,13 @@ router.get('/hotels/list/active', function(req, res, next){
   });
 });
 
+router.get('/hotels/:id/reservations/list/from/:from/to/:to/date/:datetype', function(req, res, next){
+  Hotel.getHotelOccupancy(req.params.id, req.params.from, req.params.to, req.params.datetype, function(err, reservations){
+    if(err) throw err;
+    res.json(reservations);
+  });
+});
+
 /*
 Report di produzione della struttura.
 Ritorna tutte le prenotazioni attive (O,M) per il periodo selezionato con il relativo importo
@@ -36,5 +43,5 @@ router.get('/hotels/:id/production/channel/from/:from/to/:to/:channels?', functi
     Hotel.getChannelProductionPeriod(req.params.id, req.params.channels, req.params.from, req.params.to, function(err, data){
         if(err) throw err;
         res.json(data);
-    })
+    });
 });

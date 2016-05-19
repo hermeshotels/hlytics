@@ -31,6 +31,18 @@ block subview
                     p Il report mostra il totale di camere vendute per ogni tariffa e relativo livello.
                   a(class="generate" href="/reserved/reports/list/structures") Elabora
 
+      div(class="report-section" id="occupancy")
+        div(class="row")
+          div(class="small-12 large-12 columns")
+            h3(class="section-title") #[i(class="streamline-hotel-five-stars")] Occupazione
+          div(class="small-12 large-12 columns")
+              ul(class="reports-list")
+                li
+                  div(class="title") Occupancy settimanale
+                  div(class="description")
+                    p Il report analizza
+                  a(class="generate" href="/reserved/reports/list/structures") Elabora
+
 
     block subviewjs
             script(src='/components/resports.js')
