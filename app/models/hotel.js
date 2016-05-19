@@ -191,8 +191,35 @@ module.exports = function(){
 
     }
 
-    /**/
-    Hotel.getActiveHotels = function(callback){}
+    /*
+    Ritorna tutte le strutture attive in herems con prenotazioni registrate
+    nell'ultimo mese.
+    */
+    Hotel.getActiveHotels = function(callback){
+      var query = "SELECT h.HO_NOME as nome, r.ra_numero as stelle, r.ra_descrizione as descrizione, l.lc_nome as citta " +
+      "FROM hotel h " +
+      "INNER JOIN prenotazioni p ON h.ho_id = p.ho_id " +
+      "INNER JOIN location as l ON h.lc_id = l.lc_id " +
+      "INNER JOIN rating as r on h.ho_rating = r.ra_id " +
+      "WHERE h.ho_attivo = true " +
+      "AND " +
+      "p.pr_data_agg >= '" + moment().startOf('month').format('YYYYMMDD0000') + "' " +
+      "AND " +
+      "p.pr_data_agg <= '" + moment().endOf('month').format('YYYYMMDD2359') + "' " +
+      "GROUP BY h.ho_id " +
+      "ORDER BY h.ho_nome ASC";
+
+      console.log(query);
+
+      pools.hermesPool.getConnection(function openDbConnection(err, client){
+        if(err) return callback(err, null);
+        client.query(query, function(err, result){
+          if(err) return callback(err, null);
+          client.release();
+          return callback(null, result);
+        });
+      });
+    }
 
     return Hotel;
 

@@ -17,8 +17,15 @@ router.get('/hotels/:id/bol/conversion/', function(req, res, next){
   Hotel.getHotelBolConversion(req.params.id, function(err, conversion){
     if(err) throw err;
     res.json(conversion);
-  })
-})
+  });
+});
+
+router.get('/hotels/list/active', function(req, res, next){
+  Hotel.getActiveHotels(function(err, hotels){
+    if(err) throw err;
+    res.json(hotels);
+  });
+});
 
 /*
 Report di produzione della struttura.
