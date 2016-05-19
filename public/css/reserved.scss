@@ -9,6 +9,16 @@
     overflow-y: auto;
 }
 
+.dt-buttons.button-group{
+  width: 40%;
+  float: left;
+  .button{
+    background-color: #0083E3;
+    margin-right: 5px;
+    color: #FFF;
+  }
+}
+
 .filters{
   margin-bottom: 20px;
 }

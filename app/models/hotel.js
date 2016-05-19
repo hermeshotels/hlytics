@@ -196,7 +196,7 @@ module.exports = function(){
     nell'ultimo mese.
     */
     Hotel.getActiveHotels = function(callback){
-      var query = "SELECT h.HO_NOME as nome, r.ra_numero as stelle, r.ra_descrizione as descrizione, l.lc_nome as citta " +
+      var query = "SELECT h.HO_NOME as name, r.ra_numero as starts, r.ra_descrizione as star_desc, l.lc_nome as city " +
       "FROM hotel h " +
       "INNER JOIN prenotazioni p ON h.ho_id = p.ho_id " +
       "INNER JOIN location as l ON h.lc_id = l.lc_id " +
@@ -208,8 +208,6 @@ module.exports = function(){
       "p.pr_data_agg <= '" + moment().endOf('month').format('YYYYMMDD2359') + "' " +
       "GROUP BY h.ho_id " +
       "ORDER BY h.ho_nome ASC";
-
-      console.log(query);
 
       pools.hermesPool.getConnection(function openDbConnection(err, client){
         if(err) return callback(err, null);
