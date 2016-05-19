@@ -83,6 +83,9 @@ table.dataTable.no-footer {
   .page-container .actions {
     margin-top: 20px; }
 
+.page-container.padded {
+  padding: 1em; }
+
 .reserved-loading {
   position: absolute;
   width: 100%;

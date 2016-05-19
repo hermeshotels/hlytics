@@ -31,3 +31,8 @@
       .reports-view ul.reports-list li .generate:hover {
         background-color: #1a1a1a;
         color: #FFF; }
+.reports-view .report-title {
+  font-size: 1.8rem; }
+.reports-view .report-description {
+  font-weight: 300;
+  margin-bottom: 10px; }

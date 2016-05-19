@@ -1,0 +1,22 @@
+extends ../reserved
+
+block subviewcss
+    link(rel='stylesheet', href='/css/reports.css')
+
+block subview
+    div(class="reports-view")
+      div(class="row")
+          div(class="small-12 large-12 columns")
+            div(class="report-title") Strutture attive
+            div(class="report-description")
+              p Il report mostra tutte le strutture attive nel sistema HermesHotels con prenotazioni registrate nell'ultimo mese.
+
+      div(class="row")
+        div(class="small-12 large-12 columns")
+          div(class="page-container padded")
+              div(class="row")
+                  div(class="small-12 large-12 columns")
+                    p ciao
+
+    block subviewjs
+            script(src='/components/active_structures.js')
