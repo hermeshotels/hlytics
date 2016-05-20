@@ -349,8 +349,11 @@ module.exports = function(){
             }
           };
 
+          var reservationTotal = 0;
+
           _.forEach(reservations, function(reservation){
               //Divisione fatturato per canale
+              reservationTotal += reservation.total;
               if(data.channelsGroup[reservation.channel]){
                   data.channelsGroup[reservation.channel].total += reservation.total;
                   data.channelsGroup[reservation.channel].nights += reservation.nights;
@@ -362,6 +365,11 @@ module.exports = function(){
                       reservations: reservation.reservations
                   }
               }
+          });
+
+          _.forOwn(data.channelsGroup, function(value, key){
+            value.adr = value.total / value.nights;
+            value.percent = (value.total / reservationTotal) * 100
           });
 
           return callback(null, data);
