@@ -14,7 +14,11 @@ block subview
       div(class="row")
         div(class="small-12 large-12 columns")
           div(class="page-container padded")
-              h2
+              div(class="row")
+                div(class="small-6 large-6 columns")
+                  div(id="weekly-occupancy")
+                div(class="small-6 large-6 columns")
+                  div(id="weekly-revenue")
 
     block subviewjs
-            script(src='/components/active_structures.js')
+            script(src='/components/weekly_occupancy.js')
