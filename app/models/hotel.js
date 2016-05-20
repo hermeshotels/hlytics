@@ -251,9 +251,14 @@ module.exports = function(){
           client.release();
           //Recuperato tutte le prenotazioni per il periodo specificato
 
-          var dates = {
-            totalProduction: 0
+          var dates = {};
+          var totals = {
+            totalProduction: 0,
+            totalOccupancy: 0,
+            totalWindow: 0,
+            totalNights: 0
           };
+
           _.forEach(reservations, function(reservation){
             var arrival = moment(reservation.dateFrom, 'YYYYMMDD');
             var departure = moment(reservation.dateTo, 'YYYYMMDD');
@@ -263,7 +268,9 @@ module.exports = function(){
             reservation.booking_window = arrival.diff(booked, 'days');
             //Calcolo ADR
             reservation.adr = reservation.total / reservation.nights;
-            dates.totalProduction += reservation.total;
+            totals.totalProduction += reservation.total;
+            totals.totalWindow += reservation.booking_window;
+            totals.totalNights += reservation.nights;
 
             var daydiff = departure.diff(arrival, 'days');
             for(var i = 0; i < daydiff; i++){
@@ -275,8 +282,6 @@ module.exports = function(){
 
               if(dates[arrival.format('M')][arrival.day()]){
               }else{
-                dates[arrival.format('M')]['totalOccupancy'] = 0;
-                dates[arrival.format('M')]['totalRevenue'] = 0;
                 dates[arrival.format('M')][arrival.day()] = {
                   occupancy: 0,
                   billed: 0,
@@ -285,12 +290,12 @@ module.exports = function(){
               }
               //controllo se esiste il giorno
               if(dates[arrival.format('M')][arrival.day()]){
-                dates[arrival.format('M')]['totalOccupancy'] += 1;
+                totals.totalOccupancy += 1;
                 dates[arrival.format('M')][arrival.day()]['occupancy'] += 1;
                 dates[arrival.format('M')][arrival.day()]['billed'] += reservation.adr;
                 dates[arrival.format('M')][arrival.day()]['adr'] = dates[arrival.format('M')][arrival.day()]['billed'] / dates[arrival.format('M')][arrival.day()]['occupancy'];
               }else{
-                dates[arrival.format('M')]['totalOccupancy'] = 1;
+                totals.totalOccupancy = 1;
                 dates[arrival.format('M')][arrival.day()]['occupancy'] = 1;
                 dates[arrival.format('M')][arrival.day()]['billed'] = reservation.adr;
               }
@@ -302,7 +307,8 @@ module.exports = function(){
 
           var data = {
             occupancy: dates,
-            reservations: reservations
+            reservations: reservations,
+            totals: totals
           }
 
           return callback(null, data);

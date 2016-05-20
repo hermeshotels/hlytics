@@ -4,7 +4,7 @@ block subviewcss
     link(rel='stylesheet', href='/css/reports.css')
 
 block subview
-    div(class="reports-view")
+    div(class="reports-view" id="report")
       div(class="row")
           div(class="small-12 large-12 columns")
             div(class="report-title") Occupazione settimanale
@@ -13,10 +13,25 @@ block subview
 
       div(class="row")
         div(class="small-12 large-12 columns")
-          div(class="page-container padded")
+          div(class="page-container")
               div(class="row")
-                div(class="small-12 large-12 columns talk")
-                  p #[i(class="streamline-help-circle")] L'occupazione complessiva è stata pari a <strong>360</strong> con un ADR medio di <strong>€ 360,00</strong> e un revenue complessivo di <strong>€ 72.569,23</strong>
+                div(class="small-12 large-12 columns")
+                  div(class="recap")
+                    ul
+                      li
+                        div(class="title") Occupazione
+                        div(class="value") {scope.data.totals.totalOccupancy}
+                      li
+                        div(class="title") ADR Medio
+                        div(class="value") {scope.averageAdr | currency}
+                      li
+                        div(class="title") Totale produzione
+                        div(class="value") {scope.data.totals.totalProduction | currency}
+                      li
+                        div(class="title") BW Media
+                        div(class="value") {scope.averageWindow | numround}
+                    div(class="clear-fix")
+
               div(class="row")
                 div(class="small-6 large-6 columns")
                   div(id="weekly-occupancy")
