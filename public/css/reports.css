@@ -62,3 +62,34 @@
         width: 100%; }
       .recap ul li .value {
         font-size: 1.5rem; }
+
+.period {
+  width: 50%;
+  float: left; }
+  .period .title {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 1em;
+    float: none; }
+  .period .filters {
+    background-color: #f5f5f5;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 0;
+    padding: 1em;
+    border-top: 1px solid #EBEBEB;
+    border-bottom: 1px solid #EBEBEB; }
+    .period .filters strong {
+      color: #007EE5;
+      font-weight: 300; }
+  .period .dates {
+    font-size: 1rem;
+    font-weight: 300;
+    width: 50%;
+    float: left; }
+
+.period-chart {
+  height: 400px; }
+
+.period.border {
+  border-right: 1px solid #E8E8E8; }

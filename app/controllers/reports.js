@@ -14,5 +14,9 @@ router.get('/reports/list/structures', function(req, res, next){
 });
 
 router.get('/reports/occupancy/weekly', function(req, res, next){
-  res.render('reserved/reports/weekly_occupancy.jade');
+  res.render('reserved/reports/weekly_occupancy');
+});
+
+router.get('/reports/pace', function(req, res, next){
+  res.render('reserved/reports/booking_pace');
 });

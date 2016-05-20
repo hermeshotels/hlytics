@@ -1,0 +1,37 @@
+extends ../reserved
+
+block subviewcss
+    link(rel='stylesheet', href='/css/reports.css')
+
+block subview
+    div(class="reports-view" id="report")
+      div(class="row")
+          div(class="small-12 large-12 columns")
+            div(class="report-title") Booking Pace
+            div(class="report-description")
+              p Il report mette a confronto la produzione per canale su due diversi intervalli temporali
+
+      div(class="row")
+        div(class="small-12 large-12 columns")
+          div(class="page-container")
+              div(class="row")
+                div(class="small-12 large-12 columns")
+                  div(class="period border")
+                    div(class="details")
+                      div(class="title") Periodo 1
+                      div(class="filters")
+                        div(class="dates bookingdate") Booking date <br> dal <strong>01/01/2015</strong> al <strong>17/05/2016</strong>
+                        div(class="dates arrivaldate") Arrival date <br> dal <strong>01/07/2016</strong> al <strong>31/07/2016</strong>
+                        div(class="clear-fix")
+                  div(class="period")
+                    div(class="details")
+                      div(class="title") Periodo 2
+                      div(class="filters")
+                        div(class="dates bookingdate") Booking date <br> dal <strong>01/01/2014</strong> al <strong>17/05/2015</strong>
+                        div(class="dates arrivaldate") Arrival date <br> dal <strong>01/07/2015</strong> al <strong>31/07/2015</strong>
+                        div(class="clear-fix")
+
+                  div(class="period-chart")
+
+    block subviewjs
+            script(src='/components/booking_pace.js')
