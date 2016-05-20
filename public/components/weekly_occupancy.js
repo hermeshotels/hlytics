@@ -16,10 +16,11 @@ jQuery(document).ready(function(){
           });
           weekRevenueData.push({
             name: days[weekday],
-            y: res.body.occupancy[5][weekday].billed;
+            y: res.body.occupancy[5][weekday].billed
           })
         }
         setUpWeeklyOccupancyChart(weekoccupancyData);
+        setUpWeeklyRevenueChart(weekRevenueData);
 
 
       });
@@ -56,6 +57,41 @@ function setUpWeeklyOccupancyChart(data){
       },
       series: [{
           name: 'Giorni',
+          colorByPoint: true,
+          data: data
+      }]
+  });
+}
+
+function setUpWeeklyRevenueChart(data){
+  $('#weekly-revenue').highcharts({
+      chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+      },
+      title: {
+          text: 'Revenue settimanale'
+      },
+      tooltip: {
+          pointFormat: 'Revenue <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+          pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                  enabled: true,
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                  style: {
+                      color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                  }
+              }
+          }
+      },
+      series: [{
+          name: 'Revenue',
           colorByPoint: true,
           data: data
       }]
