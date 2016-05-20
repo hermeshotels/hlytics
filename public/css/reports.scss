@@ -112,6 +112,11 @@
     strong{
       color: #007EE5;
       font-weight: 300;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out;
+      &:hover{
+        color: #004175;
+      }
     }
   }
   .dates{

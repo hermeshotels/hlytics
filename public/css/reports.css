@@ -81,7 +81,11 @@
     border-bottom: 1px solid #EBEBEB; }
     .period .filters strong {
       color: #007EE5;
-      font-weight: 300; }
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out; }
+      .period .filters strong:hover {
+        color: #004175; }
   .period .dates {
     font-size: 1rem;
     font-weight: 300;
