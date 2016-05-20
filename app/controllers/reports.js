@@ -12,3 +12,7 @@ router.get('/reports', function (req, res, next) {
 router.get('/reports/list/structures', function(req, res, next){
   res.render('reserved/reports/active_structures');
 });
+
+router.get('/reports/occupancy/weekly', function(req, res, next){
+  res.render('reserved/reports/weekly_occupancy.jade');
+});

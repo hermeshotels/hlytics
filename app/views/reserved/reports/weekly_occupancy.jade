@@ -1,0 +1,20 @@
+extends ../reserved
+
+block subviewcss
+    link(rel='stylesheet', href='/css/reports.css')
+
+block subview
+    div(class="reports-view")
+      div(class="row")
+          div(class="small-12 large-12 columns")
+            div(class="report-title") Occupazione settimanale
+            div(class="report-description")
+              p Il report mostra la produzione dell'hotel per un dato periodo divisa per giorno della settimana.
+
+      div(class="row")
+        div(class="small-12 large-12 columns")
+          div(class="page-container padded")
+              h2
+
+    block subviewjs
+            script(src='/components/active_structures.js')
