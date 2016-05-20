@@ -273,6 +273,7 @@ module.exports = function(){
               if(dates[arrival.format('M')][arrival.day()]){
               }else{
                 dates[arrival.format('M')]['totalOccupancy'] = 0;
+                dates[arrival.format('M')]['totalRevenue'] = 0;
                 dates[arrival.format('M')][arrival.day()] = {
                   occupancy: 0,
                   billed: 0,
@@ -282,12 +283,14 @@ module.exports = function(){
               //controllo se esiste il giorno
               if(dates[arrival.format('M')][arrival.day()]){
                 dates[arrival.format('M')]['totalOccupancy'] += 1;
+                dates[arrival.format('M')]['totalRevenue'] = += reservation.adr;
                 dates[arrival.format('M')][arrival.day()]['occupancy'] += 1;
                 dates[arrival.format('M')][arrival.day()]['billed'] += reservation.adr;
                 dates[arrival.format('M')][arrival.day()]['adr'] = dates[arrival.format('M')][arrival.day()]['billed'] / dates[arrival.format('M')][arrival.day()]['occupancy'];
               }else{
-                dates[arrival.format('M')][arrival.day()]['occupancy'] = 1;
                 dates[arrival.format('M')]['totalOccupancy'] = 1;
+                dates[arrival.format('M')]['totalRevenue'] = reservation.adr;
+                dates[arrival.format('M')][arrival.day()]['occupancy'] = 1;
                 dates[arrival.format('M')][arrival.day()]['billed'] = reservation.adr;
               }
 
