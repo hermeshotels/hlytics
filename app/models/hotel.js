@@ -282,12 +282,12 @@ module.exports = function(){
               //controllo se esiste il giorno
               if(dates[arrival.format('M')][arrival.day()]){
                 dates[arrival.format('M')]['occupancy'] += 1;
-                dates[arrival.format('M')][arrival.day()]['totalOccupancy'] += 1;
+                dates[arrival.format('M')][arrival.day()]['occupancy'] += 1;
                 dates[arrival.format('M')][arrival.day()]['billed'] += reservation.adr;
                 dates[arrival.format('M')][arrival.day()]['adr'] = dates[arrival.format('M')][arrival.day()]['billed'] / dates[arrival.format('M')][arrival.day()]['occupancy'];
               }else{
-                dates[arrival.format('M')][arrival.day()]['totalOccupancy'] = 1;
-                dates[arrival.format('M')]['occupancy'] = 1;
+                dates[arrival.format('M')][arrival.day()]['occupancy'] = 1;
+                dates[arrival.format('M')]['totalOccupancy'] = 1;
                 dates[arrival.format('M')][arrival.day()]['billed'] = reservation.adr;
               }
 
