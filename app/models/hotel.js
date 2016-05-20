@@ -251,15 +251,53 @@ module.exports = function(){
           client.release();
           //Recuperato tutte le prenotazioni per il periodo specificato
 
+          var dates = {};
+
           _.forEach(reservations, function(reservation){
             var arrival = moment(reservation.dateFrom, 'YYYYMMDD');
             var departure = moment(reservation.dateTo, 'YYYYMMDD');
+
             //Calcolo la booking window
             reservation.booking_window = departure.diff(arrival, 'days');
             //Calcolo ADR
             reservation.adr = reservation.total / reservation.nights;
-          })
-          return callback(null, reservations);
+
+            while(arrival.diff(departure) <= 0){
+              //controllo se il mese esiste
+              if(dates[arrival.format('M')]){
+              }else{
+                dates[arrival.format('M')] = {};
+              }
+
+              if(dates[arrival.format('M')][arrival.day()]){
+              }else{
+                dates[arrival.format('M')][arrival.day()] = {
+                  occupancy: 0,
+                  billed: 0,
+                  adr: 0
+                };
+              }
+              //controllo se esiste il giorno
+              if(dates[arrival.format('M')][arrival.day()]){
+                dates[arrival.format('M')][arrival.day()]['occupancy'] += 1;
+                dates[arrival.format('M')][arrival.day()]['billed'] += reservation.adr;
+                dates[arrival.format('M')][arrival.day()]['adr'] = dates[arrival.format('M')][arrival.day()]['billed'] / dates[arrival.format('M')][arrival.day()]['occupancy'];
+              }else{
+                dates[arrival.format('M')][arrival.day()]['occupancy'] = 1;
+                dates[arrival.format('M')][arrival.day()]['billed'] = reservation.adr;
+              }
+
+              arrival.add(1, 'days');
+
+            }
+          });
+
+          var data = {
+            occupancy: dates,
+            reservations: reservations
+          }
+
+          return callback(null, data);
 
 
         });
