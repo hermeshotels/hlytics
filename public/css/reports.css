@@ -41,3 +41,10 @@
 
 .report-section {
   margin-bottom: 20px; }
+
+.talk {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #EDEDED; }
+  .talk i {
+    font-size: 1.4rem;
+    margin-right: 8px; }
