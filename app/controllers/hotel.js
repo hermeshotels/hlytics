@@ -34,6 +34,13 @@ router.get('/hotels/:id/reservations/list/from/:from/to/:to/date/:datetype', fun
   });
 });
 
+router.get('/hotels/:id/pace/bookingfrom/:bookingfrom/bookingto/:bookingto/arrivalfrom/:arrivalfrom/arrivalto/:arrivalto', function(req, res, next){
+  Hotel.getHotelPace(req.params.id, req.params.bookingfrom, req.params.bookingto, req.params.arrivalfrom, req.params.arrivalto, function(err, reservations){
+    if(err) throw err;
+    res.json(reservations);
+  });
+});
+
 /*
 Report di produzione della struttura.
 Ritorna tutte le prenotazioni attive (O,M) per il periodo selezionato con il relativo importo

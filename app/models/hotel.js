@@ -317,6 +317,58 @@ module.exports = function(){
         });
       });
     }
+
+    Hotel.getHotelPace = function getHotelPace(id, bookingFrom, bookingTo, arrivalFrom, arrivalTo, callback){
+
+      var query = "SELECT " +
+          "count(DISTINCT p.pr_id) as reservations, " +
+          "p.PR_ID as pr_id," +
+          "c.CA_NOME as channel," +
+          "SUM(s.SC_TOTALE) as total," +
+          "p.PR_NOTTI AS nights " +
+      "FROM " +
+          "prenotazioni as p " +
+          "LEFT JOIN scorporo as s ON p.PR_ID = s.PR_ID " +
+          "INNER JOIN canali as c on p.CA_ID = c.CA_ID " +
+      "WHERE " +
+              "p.HO_ID = ? " +
+              "AND p.pr_Status IN ('O' , 'M') " +
+              "AND p.PR_DATA_AGG BETWEEN ? AND ? " +
+              "AND p.PR_DATADA BETWEEN ? AND ?" +
+              "GROUP BY p.PR_ID, p.CA_ID";
+
+      pools.hermesPool.getConnection(function openDbConnection(err, client){
+        if(err) return callback(err, null);
+        client.query(query, [id, bookingFrom, bookingTo, arrivalFrom, arrivalTo], function(err, reservations){
+          if(err) return callback(err, null);
+          client.release();
+
+          var data = {
+            channelsGroup: {
+
+            }
+          };
+
+          _.forEach(reservations, function(reservation){
+              //Divisione fatturato per canale
+              if(data.channelsGroup[reservation.channel]){
+                  data.channelsGroup[reservation.channel].total += reservation.total;
+                  data.channelsGroup[reservation.channel].nights += reservation.nights;
+                  data.channelsGroup[reservation.channel].reservations += reservation.reservations;
+              }else{
+                  data.channelsGroup[reservation.channel] = {
+                      total: reservation.total,
+                      nights: reservation.nights,
+                      reservations: reservation.reservations
+                  }
+              }
+          });
+
+          return callback(null, data);
+        });
+      });
+    }
+
     return Hotel;
 
 }
